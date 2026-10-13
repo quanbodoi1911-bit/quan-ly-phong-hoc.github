@@ -1,1 +1,190 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý phòng học</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+    <div class="sidebar">
+        <h2>Quản lý phòng học</h2>
+
+        <a href="#" onclick="showPage('home')">Trang chủ</a>
+        <a href="#" onclick="showPage('rooms')">Quản lý phòng học</a>
+        <a href="#" onclick="showPage('calendar')">Lịch học</a>
+        <a href="#" onclick="showPage('booking')">Đặt phòng</a>
+        <a href="#" onclick="showPage('requests')">Yêu cầu đặt phòng</a>
+        <a href="#" onclick="showPage('users')">Người dùng</a>
+        <a href="#" onclick="showPage('reports')">Báo cáo</a>
+    </div>
+
+    <div class="main">
+        <div class="header">
+            <input type="text" placeholder="Tìm kiếm...">
+            <span>🔔　👤</span>
+        </div>
+
+        <div id="home" class="page">
+            <h1>Dashboard</h1>
+            <p>Tổng quan hệ thống quản lý phòng học</p>
+
+            <div class="cards">
+                <div class="card">
+                    <p>Tổng số phòng</p>
+                    <h2>12</h2>
+                </div>
+
+                <div class="card">
+                    <p>Phòng đang sử dụng</p>
+                    <h2>5</h2>
+                </div>
+
+                <div class="card">
+                    <p>Phòng trống</p>
+                    <h2>6</h2>
+                </div>
+
+                <div class="card">
+                    <p>Yêu cầu chờ duyệt</p>
+                    <h2>3</h2>
+                </div>
+            </div>
+        </div>
+
+        <div id="rooms" class="page hidden">
+            <h1>Quản lý phòng học</h1>
+
+            <button onclick="addRoom()">+ Thêm phòng</button>
+
+            <table id="roomTable">
+                <tr>
+                    <th>Mã phòng</th>
+                    <th>Tên phòng</th>
+                    <th>Tòa nhà</th>
+                    <th>Sức chứa</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
+                </tr>
+
+                <tr>
+                    <td>A101</td>
+                    <td>Phòng A101</td>
+                    <td>Tòa A</td>
+                    <td>50</td>
+                    <td>Trống</td>
+                    <td>
+                        <button onclick="editRoom(this)">Sửa</button>
+                        <button onclick="deleteRoom(this)">Xóa</button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>A102</td>
+                    <td>Phòng A102</td>
+                    <td>Tòa A</td>
+                    <td>45</td>
+                    <td>Đang sử dụng</td>
+                    <td>
+                        <button onclick="editRoom(this)">Sửa</button>
+                        <button onclick="deleteRoom(this)">Xóa</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="calendar" class="page hidden">
+            <h1>Lịch học</h1>
+            <p>Thứ 2 - Phòng A101 - 08:00 đến 10:00</p>
+            <p>Thứ 3 - Phòng B201 - 13:00 đến 15:00</p>
+            <p>Thứ 5 - Phòng C301 - 15:00 đến 17:00</p>
+        </div>
+
+        <div id="booking" class="page hidden">
+            <h1>Đặt phòng</h1>
+
+            <form onsubmit="bookingRoom(event)">
+                <label>Chọn phòng:</label>
+                <select id="room">
+                    <option>Phòng A101</option>
+                    <option>Phòng A102</option>
+                    <option>Phòng B201</option>
+                </select>
+
+                <label>Ngày sử dụng:</label>
+                <input type="date" required>
+
+                <label>Thời gian bắt đầu:</label>
+                <input type="time" required>
+
+                <label>Thời gian kết thúc:</label>
+                <input type="time" required>
+
+                <label>Mục đích sử dụng:</label>
+                <textarea required></textarea>
+
+                <button type="submit">Gửi yêu cầu</button>
+            </form>
+        </div>
+
+        <div id="requests" class="page hidden">
+            <h1>Yêu cầu đặt phòng</h1>
+
+            <table id="requestTable">
+                <tr>
+                    <th>Người đặt</th>
+                    <th>Phòng</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
+                </tr>
+
+                <tr>
+                    <td>Nguyễn Văn A</td>
+                    <td>A101</td>
+                    <td>Chờ duyệt</td>
+                    <td>
+                        <button onclick="approve(this)">Duyệt</button>
+                        <button onclick="reject(this)">Từ chối</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="users" class="page hidden">
+            <h1>Người dùng</h1>
+
+            <button onclick="addUser()">+ Thêm người dùng</button>
+
+            <table id="userTable">
+                <tr>
+                    <th>Mã người dùng</th>
+                    <th>Họ tên</th>
+                    <th>Email</th>
+                    <th>Vai trò</th>
+                    <th>Thao tác</th>
+                </tr>
+
+                <tr>
+                    <td>U001</td>
+                    <td>Nguyễn Văn A</td>
+                    <td>admin@gmail.com</td>
+                    <td>Admin</td>
+                    <td><button onclick="deleteRoom(this)">Xóa</button></td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="reports" class="page hidden">
+            <h1>Báo cáo</h1>
+            <p>Tổng số phòng: 12</p>
+            <p>Số phòng đang sử dụng: 5</p>
+            <p>Số phòng trống: 6</p>
+            <p>Số yêu cầu chờ duyệt: 3</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
