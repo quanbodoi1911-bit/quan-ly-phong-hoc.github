@@ -1,1 +1,157 @@
+* {
+    box-sizing: border-box;
+}
 
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f3f6fb;
+    color: #243247;
+}
+
+.sidebar {
+    width: 220px;
+    height: 100vh;
+    background: #17365d;
+    position: fixed;
+    padding: 15px;
+    color: white;
+}
+
+.sidebar h2 {
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.sidebar a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 13px 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+
+.sidebar a:hover {
+    background: #2878e8;
+}
+
+.main {
+    margin-left: 220px;
+    padding: 20px;
+}
+
+.header {
+    background: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+    border-radius: 8px;
+}
+
+.header input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px #ddd;
+}
+
+.card p {
+    color: #68758a;
+}
+
+.card h2 {
+    color: #2878e8;
+    font-size: 28px;
+}
+
+.page {
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+}
+
+.hidden {
+    display: none;
+}
+
+button {
+    background: #2878e8;
+    color: white;
+    padding: 9px 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 3px;
+}
+
+button:hover {
+    background: #165bb5;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border-bottom: 1px solid #ddd;
+    padding: 13px;
+    text-align: left;
+}
+
+th {
+    background: #f3f6fb;
+}
+
+form {
+    max-width: 500px;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+}
+
+form input,
+form select,
+form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+form textarea {
+    height: 90px;
+}
+
+@media (max-width: 800px) {
+    .sidebar {
+        width: 170px;
+    }
+
+    .main {
+        margin-left: 170px;
+    }
+
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
