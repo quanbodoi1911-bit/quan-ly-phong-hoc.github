@@ -1,3 +1,7 @@
+/* ==========================================
+   PHẦN CHUNG: GIAO DIỆN TOÀN WEBSITE
+   ========================================== */
+
 * {
     box-sizing: border-box;
 }
@@ -14,14 +18,18 @@ body {
     display: none !important;
 }
 
-/* ĐĂNG NHẬP */
+
+/* ==========================================
+   THÀNH VIÊN 1: GIAO DIỆN ĐĂNG NHẬP
+   ========================================== */
+
 .login-page {
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #17365d;
     padding: 20px;
+    background: #17365d;
 }
 
 .login-box {
@@ -34,14 +42,13 @@ body {
 }
 
 .login-box h2 {
-    text-align: center;
     color: #17365d;
+    text-align: center;
     font-size: 21px;
 }
 
-.login-box p {
+.login-box > p {
     text-align: center;
-    color: #68758a;
 }
 
 .login-box label {
@@ -57,40 +64,50 @@ body {
     border-radius: 5px;
 }
 
-.demo-account {
-    text-align: center;
-    font-size: 12px;
-    line-height: 1.8;
-    color: #68758a;
+#loginMessage {
+    color: red;
 }
 
-/* SIDEBAR */
+.demo-account {
+    margin-top: 15px;
+    padding: 10px;
+    text-align: center;
+    background: #f3f6fb;
+    border-radius: 5px;
+    line-height: 1.8;
+}
+
+
+/* ==========================================
+   THÀNH VIÊN 1: SIDEBAR VÀ ĐIỀU HƯỚNG
+   ========================================== */
+
 .sidebar {
-    width: 230px;
-    height: 100vh;
     position: fixed;
     top: 0;
     left: 0;
+    width: 230px;
+    height: 100vh;
     padding: 15px;
+    overflow-y: auto;
     background: #17365d;
     color: white;
-    overflow-y: auto;
 }
 
 .sidebar h2 {
+    margin-bottom: 30px;
     text-align: center;
     font-size: 19px;
     line-height: 1.5;
-    margin-bottom: 30px;
 }
 
 .sidebar a {
     display: block;
     padding: 13px 10px;
     margin-bottom: 5px;
+    border-radius: 5px;
     color: white;
     text-decoration: none;
-    border-radius: 5px;
 }
 
 .sidebar a:hover,
@@ -98,8 +115,23 @@ body {
     background: #2878e8;
 }
 
-/* NỘI DUNG */
+.logout-btn {
+    width: 100%;
+    margin-top: 25px;
+    background: #dc3545;
+}
+
+.logout-btn:hover {
+    background: #b52a37;
+}
+
+
+/* ==========================================
+   PHẦN CHUNG: KHU VỰC NỘI DUNG
+   ========================================== */
+
 .main {
+    min-height: 100vh;
     margin-left: 230px;
     padding: 20px;
 }
@@ -127,7 +159,6 @@ body {
     font-weight: bold;
 }
 
-/* CÁC TRANG */
 .page {
     min-height: 300px;
     padding: 25px;
@@ -140,7 +171,161 @@ body {
     color: #17365d;
 }
 
-/* THỐNG KÊ */
+
+/* ==========================================
+   THÀNH VIÊN 2: GIAO DIỆN QUẢN LÝ PHÒNG
+   ========================================== */
+
+#rooms > button {
+    margin-bottom: 10px;
+}
+
+.content-form {
+    max-width: 550px;
+    margin: 20px 0;
+    padding: 20px;
+    background: #f8faff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.content-form h3 {
+    margin-top: 0;
+    color: #17365d;
+}
+
+.content-form label {
+    display: block;
+    margin-top: 15px;
+}
+
+.content-form input,
+.content-form select,
+.content-form textarea {
+    width: 100%;
+    margin-top: 5px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+}
+
+.content-form textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.cancel-btn {
+    background: #6c757d;
+}
+
+
+/* ==========================================
+   PHẦN CHUNG: NÚT BẤM
+   ========================================== */
+
+button {
+    padding: 10px 14px;
+    margin: 3px;
+    border: none;
+    border-radius: 5px;
+    background: #2878e8;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #165bb5;
+}
+
+.delete-btn {
+    background: #dc3545;
+}
+
+.delete-btn:hover {
+    background: #b52a37;
+}
+
+.approve-btn {
+    background: #16803c;
+}
+
+.approve-btn:hover {
+    background: #11632e;
+}
+
+
+/* ==========================================
+   THÀNH VIÊN 2, 3, 4:
+   GIAO DIỆN BẢNG PHÒNG, LỊCH VÀ YÊU CẦU
+   ========================================== */
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    background: white;
+}
+
+th,
+td {
+    padding: 13px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background: #f3f6fb;
+    color: #17365d;
+}
+
+tbody tr:hover {
+    background: #f8faff;
+}
+
+
+/* ==========================================
+   THÀNH VIÊN 3: GIAO DIỆN ĐẶT PHÒNG VÀ LỊCH
+   ========================================== */
+
+#bookingForm {
+    max-width: 600px;
+}
+
+#calendarTable th {
+    background: #e7efff;
+}
+
+
+/* ==========================================
+   THÀNH VIÊN 4: TRẠNG THÁI YÊU CẦU
+   ========================================== */
+
+.status-pending {
+    color: #d97706;
+    font-weight: bold;
+}
+
+.status-approved {
+    color: #16803c;
+    font-weight: bold;
+}
+
+.status-rejected {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+
+/* ==========================================
+   THÀNH VIÊN 5: TRANG CHỦ VÀ THỐNG KÊ
+   ========================================== */
+
 .cards {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -165,121 +350,28 @@ body {
     font-size: 28px;
 }
 
-/* NÚT */
-button {
-    padding: 10px 14px;
-    margin: 3px;
-    border: none;
-    border-radius: 5px;
-    background: #2878e8;
-    color: white;
-    cursor: pointer;
-}
-
-button:hover {
-    background: #165bb5;
-}
-
-.logout-btn {
-    width: 100%;
+.welcome-box {
     margin-top: 25px;
-    background: #dc3545;
-}
-
-.logout-btn:hover {
-    background: #b52a37;
-}
-
-.delete-btn {
-    background: #dc3545;
-}
-
-.delete-btn:hover {
-    background: #b52a37;
-}
-
-.approve-btn {
-    background: #16803c;
-}
-
-/* BẢNG */
-.table-container {
-    width: 100%;
-    overflow-x: auto;
-}
-
-table {
-    width: 100%;
-    margin-top: 20px;
-    border-collapse: collapse;
-    background: white;
-}
-
-th,
-td {
-    padding: 13px;
-    border-bottom: 1px solid #ddd;
-    text-align: left;
-    white-space: nowrap;
-}
-
-th {
-    background: #f3f6fb;
-    color: #17365d;
-}
-
-tbody tr:hover {
-    background: #f8faff;
-}
-
-/* BIỂU MẪU */
-.content-form {
-    max-width: 550px;
-    margin: 20px 0;
     padding: 20px;
     background: #f8faff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-}
-
-.content-form label {
-    display: block;
-    margin-top: 15px;
-}
-
-.content-form input,
-.content-form select,
-.content-form textarea {
-    width: 100%;
-    margin-top: 5px;
-    padding: 10px;
-    border: 1px solid #ddd;
+    border-left: 4px solid #2878e8;
     border-radius: 5px;
-    font-family: Arial, sans-serif;
 }
 
-.content-form textarea {
-    height: 100px;
-    resize: vertical;
+
+/* ==========================================
+   THÀNH VIÊN 5: GIAO DIỆN BÁO CÁO
+   ========================================== */
+
+#reports .card {
+    border-top: 3px solid #2878e8;
 }
 
-/* THÔNG BÁO TRẠNG THÁI */
-.status-pending {
-    color: #d97706;
-    font-weight: bold;
-}
 
-.status-approved {
-    color: #16803c;
-    font-weight: bold;
-}
+/* ==========================================
+   PHẦN CHUNG: IN BÁO CÁO
+   ========================================== */
 
-.status-rejected {
-    color: #dc3545;
-    font-weight: bold;
-}
-
-/* IN BÁO CÁO */
 @media print {
     .sidebar,
     .header,
@@ -297,7 +389,11 @@ tbody tr:hover {
     }
 }
 
-/* MÁY TÍNH BẢNG */
+
+/* ==========================================
+   PHẦN CHUNG: GIAO DIỆN MÁY TÍNH BẢNG
+   ========================================== */
+
 @media (max-width: 1000px) {
     .cards {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -308,7 +404,11 @@ tbody tr:hover {
     }
 }
 
-/* ĐIỆN THOẠI */
+
+/* ==========================================
+   PHẦN CHUNG: GIAO DIỆN ĐIỆN THOẠI
+   ========================================== */
+
 @media (max-width: 600px) {
     .sidebar {
         width: 150px;
@@ -348,5 +448,9 @@ tbody tr:hover {
     .card {
         padding: 15px;
     }
-}
 
+    th,
+    td {
+        padding: 9px;
+    }
+}
