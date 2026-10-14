@@ -1,24 +1,3 @@
-```css
-/* ==================================================
-   WEBSITE QUẢN LÝ PHÒNG HỌC
-
-   THÀNH VIÊN 1:
-   Giao diện đăng nhập, sidebar, menu, người dùng.
-
-   THÀNH VIÊN 2:
-   Giao diện quản lý phòng học.
-
-   THÀNH VIÊN 3:
-   Giao diện lịch học và đặt phòng.
-
-   THÀNH VIÊN 4:
-   Giao diện yêu cầu đặt phòng.
-
-   THÀNH VIÊN 5:
-   Giao diện trang chủ, thống kê và báo cáo.
-   ================================================== */
-
-
 /* THÀNH VIÊN 1: CSS CHUNG */
 * {
     box-sizing: border-box;
