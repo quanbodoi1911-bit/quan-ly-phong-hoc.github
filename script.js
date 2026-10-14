@@ -702,4 +702,4 @@ function ganGiaTri(id, value) {
         element.innerText = value;
     }
 }
-```
+
