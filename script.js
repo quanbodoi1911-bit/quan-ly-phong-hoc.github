@@ -1,676 +1,717 @@
+```javascript
+// ==========================================
+// THÀNH VIÊN 1: ĐĂNG NHẬP, ĐĂNG XUẤT
+// ==========================================
 
-/* ==================================================
-   WEBSITE QUẢN LÝ PHÒNG HỌC
+document.addEventListener("DOMContentLoaded", function () {
+    var loginForm = document.getElementById("loginForm");
 
-   THÀNH VIÊN 1:
-   Đăng nhập, đăng xuất, chuyển trang, quản lý người dùng.
-
-   THÀNH VIÊN 2:
-   Thêm, sửa, xóa phòng học và thống kê phòng.
-
-   THÀNH VIÊN 3:
-   Lịch học và đặt phòng.
-
-   THÀNH VIÊN 4:
-   Duyệt, từ chối yêu cầu đặt phòng.
-
-   THÀNH VIÊN 5:
-   Thống kê, báo cáo và tìm kiếm.
-   ================================================== */
-
-
-/* ==================================================
-   THÀNH VIÊN 1: ĐĂNG NHẬP VÀ ĐĂNG XUẤT
-   Tài khoản demo: admin
-   Mật khẩu demo: 123456
-   ================================================== */
-
-var loginForm = document.getElementById("loginForm");
-
-loginForm.addEventListener("submit", function(event) {
-    event.preventDefault();
-
-    var username = document.getElementById("username").value.trim();
-    var password = document.getElementById("password").value;
-    var message = document.getElementById("loginMessage");
-
-    if (username === "admin" && password === "123456") {
-        sessionStorage.setItem("username", username);
-        sessionStorage.setItem("role", "admin");
-
-        openWebsite();
-    } else {
-        message.innerText = "Tên đăng nhập hoặc mật khẩu không đúng!";
-        message.style.color = "red";
+    if (!loginForm) {
+        console.error("Không tìm thấy loginForm trong index.html");
+        return;
     }
+
+    // Đăng nhập
+    loginForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        var username = document.getElementById("username").value.trim();
+        var password = document.getElementById("password").value;
+        var message = document.getElementById("loginMessage");
+
+        if (username === "admin" && password === "123456") {
+            sessionStorage.setItem("username", username);
+            sessionStorage.setItem("role", "admin");
+
+            moTrangChu();
+            message.innerText = "";
+        } else {
+            message.innerText = "Sai tên đăng nhập hoặc mật khẩu!";
+            message.style.color = "red";
+        }
+    });
+
+    // Giữ trạng thái đăng nhập trong phiên hiện tại
+    if (sessionStorage.getItem("username") === "admin") {
+        moTrangChu();
+    }
+
+    // Đăng xuất
+    var logoutBtn = document.getElementById("logoutBtn");
+
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", function () {
+            sessionStorage.clear();
+
+            document.getElementById("app").classList.add("hidden");
+            document.getElementById("loginPage").classList.remove("hidden");
+
+            loginForm.reset();
+
+            var message = document.getElementById("loginMessage");
+            if (message) {
+                message.innerText = "";
+            }
+        });
+    }
+
+    // Chuyển trang bằng menu
+    var menuLinks = document.querySelectorAll(".menu-link");
+
+    menuLinks.forEach(function (link) {
+        link.addEventListener("click", function (event) {
+            event.preventDefault();
+
+            var pageId = link.getAttribute("data-page");
+            showPage(pageId);
+
+            menuLinks.forEach(function (item) {
+                item.classList.remove("active");
+            });
+
+            link.classList.add("active");
+        });
+    });
+
+    // Khởi tạo dữ liệu
+    khoiTaoDuLieu();
 });
 
 
-// HIỂN THỊ WEBSITE SAU KHI ĐĂNG NHẬP
-function openWebsite() {
-    document.getElementById("loginPage").classList.add("hidden");
-    document.getElementById("app").classList.remove("hidden");
+// Mở trang chủ sau khi đăng nhập
+function moTrangChu() {
+    var loginPage = document.getElementById("loginPage");
+    var app = document.getElementById("app");
+    var currentUser = document.getElementById("currentUser");
 
-    var username = sessionStorage.getItem("username");
+    if (loginPage) {
+        loginPage.classList.add("hidden");
+    }
 
-    document.getElementById("currentUser").innerText =
-        username + " - Quản trị viên";
+    if (app) {
+        app.classList.remove("hidden");
+    }
+
+    if (currentUser) {
+        currentUser.innerText = "admin - Quản trị viên";
+    }
 
     showPage("home");
-
     updateStatistics();
     updateRequestStatistics();
     updateRoomSelect();
 }
 
 
-// KIỂM TRA TRẠNG THÁI ĐĂNG NHẬP
-window.addEventListener("DOMContentLoaded", function() {
-    if (sessionStorage.getItem("username")) {
-        openWebsite();
-    }
-
-    updateStatistics();
-    updateRequestStatistics();
-});
-
-
-// ĐĂNG XUẤT
-document.getElementById("logoutBtn").addEventListener("click", function() {
-    if (confirm("Bạn có chắc muốn đăng xuất không?")) {
-        sessionStorage.removeItem("username");
-        sessionStorage.removeItem("role");
-
-        document.getElementById("app").classList.add("hidden");
-        document.getElementById("loginPage").classList.remove("hidden");
-
-        document.getElementById("loginForm").reset();
-        document.getElementById("loginMessage").innerText = "";
-    }
-});
-
-
-/* ==================================================
-   THÀNH VIÊN 1: SIDEBAR VÀ CHUYỂN TRANG
-   ================================================== */
-
-var menuLinks = document.querySelectorAll(".menu-link");
-
-menuLinks.forEach(function(link) {
-    link.addEventListener("click", function(event) {
-        event.preventDefault();
-
-        var pageId = this.getAttribute("data-page");
-
-        showPage(pageId);
-    });
-});
-
-
-// HIỂN THỊ TRANG ĐƯỢC CHỌN
-function showPage(id) {
+// Chuyển trang
+function showPage(pageId) {
     var pages = document.querySelectorAll(".page");
 
-    pages.forEach(function(page) {
+    pages.forEach(function (page) {
         page.classList.add("hidden");
     });
 
-    var selectedPage = document.getElementById(id);
+    var selectedPage = document.getElementById(pageId);
 
     if (selectedPage) {
         selectedPage.classList.remove("hidden");
     }
-
-    menuLinks.forEach(function(link) {
-        link.classList.remove("active");
-
-        if (link.getAttribute("data-page") === id) {
-            link.classList.add("active");
-        }
-    });
-
-    document.getElementById("searchInput").value = "";
-
-    resetSearch();
 }
 
 
-/* ==================================================
-   THÀNH VIÊN 2: QUẢN LÝ PHÒNG HỌC
-   Bao gồm thêm, sửa và xóa phòng.
-   ================================================== */
+// ==========================================
+// DỮ LIỆU LƯU TRONG TRÌNH DUYỆT
+// ==========================================
 
-// THÊM PHÒNG
-document.getElementById("addRoomBtn").addEventListener("click", function() {
-    var ma = prompt("Nhập mã phòng:");
+var rooms = [];
+var requests = [];
+var calendar = [];
+var users = [
+    {
+        username: "admin",
+        role: "Quản trị viên"
+    }
+];
 
-    if (ma === null || ma.trim() === "") {
-        return;
+var nextRoomId = 1;
+var nextRequestId = 1;
+
+
+// Khởi tạo dữ liệu ban đầu
+function khoiTaoDuLieu() {
+    // Lấy dữ liệu phòng đã lưu
+    try {
+        rooms = JSON.parse(localStorage.getItem("rooms")) || [];
+        requests = JSON.parse(localStorage.getItem("requests")) || [];
+        calendar = JSON.parse(localStorage.getItem("calendar")) || [];
+        users = JSON.parse(localStorage.getItem("users")) || users;
+    } catch (error) {
+        rooms = [];
+        requests = [];
+        calendar = [];
     }
 
-    ma = ma.trim();
-
-    var rows = document.querySelectorAll("#roomTable tbody tr");
-
-    for (var i = 0; i < rows.length; i++) {
-        if (rows[i].cells[0].innerText.toLowerCase() === ma.toLowerCase()) {
-            alert("Mã phòng đã tồn tại!");
-            return;
+    // Xác định mã tiếp theo
+    rooms.forEach(function (room) {
+        if (room.id >= nextRoomId) {
+            nextRoomId = room.id + 1;
         }
-    }
+    });
 
-    var ten = prompt("Nhập tên phòng:");
+    requests.forEach(function (request) {
+        if (request.id >= nextRequestId) {
+            nextRequestId = request.id + 1;
+        }
+    });
 
-    if (ten === null || ten.trim() === "") {
-        return;
-    }
-
-    var toa = prompt("Nhập tòa nhà:");
-
-    if (toa === null || toa.trim() === "") {
-        return;
-    }
-
-    var sucChua = prompt("Nhập sức chứa:");
-
-    if (sucChua === null || sucChua.trim() === "" ||
-        !Number.isInteger(Number(sucChua)) || Number(sucChua) <= 0) {
-        alert("Sức chứa phải là số nguyên dương!");
-        return;
-    }
-
-    var row = document.querySelector("#roomTable tbody").insertRow();
-
-    addCell(row, ma);
-    addCell(row, ten.trim());
-    addCell(row, toa.trim());
-    addCell(row, sucChua);
-    addCell(row, "Trống");
-
-    var cell = row.insertCell();
-
-    var editButton = document.createElement("button");
-    editButton.className = "edit-room";
-    editButton.innerText = "Sửa";
-
-    var deleteButton = document.createElement("button");
-    deleteButton.className = "delete-room";
-    deleteButton.innerText = "Xóa";
-
-    cell.appendChild(editButton);
-    cell.appendChild(deleteButton);
+    hienThiPhong();
+    hienThiYeuCau();
+    hienThiLich();
+    hienThiNguoiDung();
 
     updateStatistics();
+    updateRequestStatistics();
     updateRoomSelect();
 
-    alert("Thêm phòng thành công!");
-});
+    ganSuKienPhong();
+    ganSuKienDatPhong();
+    ganSuKienDuyet();
+    ganSuKienNguoiDung();
+    ganSuKienBaoCao();
+}
 
 
-// SỬA VÀ XÓA PHÒNG BẰNG EVENT DELEGATION
-document.querySelector("#roomTable tbody").addEventListener("click", function(event) {
-    var button = event.target;
+// Lưu dữ liệu vào trình duyệt
+function luuDuLieu() {
+    localStorage.setItem("rooms", JSON.stringify(rooms));
+    localStorage.setItem("requests", JSON.stringify(requests));
+    localStorage.setItem("calendar", JSON.stringify(calendar));
+    localStorage.setItem("users", JSON.stringify(users));
+}
 
-    if (button.classList.contains("delete-room")) {
-        var row = button.closest("tr");
 
-        if (confirm("Bạn có chắc muốn xóa phòng này không?")) {
-            row.remove();
+// ==========================================
+// THÀNH VIÊN 2: QUẢN LÝ PHÒNG HỌC
+// ==========================================
 
+function ganSuKienPhong() {
+    var roomForm = document.getElementById("roomForm");
+
+    if (roomForm) {
+        roomForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            var roomId = document.getElementById("roomId").value;
+            var roomName = document.getElementById("roomName").value.trim();
+            var roomCapacity = Number(
+                document.getElementById("roomCapacity").value
+            );
+            var roomStatus = document.getElementById("roomStatus").value;
+
+            if (roomName === "" || roomCapacity <= 0) {
+                alert("Vui lòng nhập thông tin phòng hợp lệ!");
+                return;
+            }
+
+            if (roomId !== "") {
+                var room = rooms.find(function (item) {
+                    return item.id === Number(roomId);
+                });
+
+                if (room) {
+                    room.name = roomName;
+                    room.capacity = roomCapacity;
+                    room.status = roomStatus;
+                }
+            } else {
+                rooms.push({
+                    id: nextRoomId++,
+                    name: roomName,
+                    capacity: roomCapacity,
+                    status: roomStatus
+                });
+            }
+
+            luuDuLieu();
+            hienThiPhong();
             updateStatistics();
             updateRoomSelect();
-        }
+
+            roomForm.reset();
+            document.getElementById("roomId").value = "";
+            document.getElementById("saveRoomBtn").innerText = "Thêm phòng";
+        });
     }
 
-    if (button.classList.contains("edit-room")) {
-        editRoom(button);
+    var roomTable = document.getElementById("roomTable");
+
+    if (roomTable) {
+        roomTable.addEventListener("click", function (event) {
+            var id = Number(event.target.dataset.id);
+
+            if (event.target.classList.contains("edit-room")) {
+                var room = rooms.find(function (item) {
+                    return item.id === id;
+                });
+
+                if (room) {
+                    document.getElementById("roomId").value = room.id;
+                    document.getElementById("roomName").value = room.name;
+                    document.getElementById("roomCapacity").value =
+                        room.capacity;
+                    document.getElementById("roomStatus").value = room.status;
+                    document.getElementById("saveRoomBtn").innerText =
+                        "Lưu thay đổi";
+                }
+            }
+
+            if (event.target.classList.contains("delete-room")) {
+                var confirmed = confirm("Bạn có muốn xóa phòng này không?");
+
+                if (confirmed) {
+                    rooms = rooms.filter(function (item) {
+                        return item.id !== id;
+                    });
+
+                    luuDuLieu();
+                    hienThiPhong();
+                    updateStatistics();
+                    updateRoomSelect();
+                }
+            }
+        });
     }
-});
-
-
-// SỬA THÔNG TIN PHÒNG
-function editRoom(button) {
-    var row = button.closest("tr");
-
-    var ten = prompt("Nhập tên phòng:", row.cells[1].innerText);
-
-    if (ten === null || ten.trim() === "") {
-        return;
-    }
-
-    var toa = prompt("Nhập tòa nhà:", row.cells[2].innerText);
-
-    if (toa === null || toa.trim() === "") {
-        return;
-    }
-
-    var sucChua = prompt("Nhập sức chứa:", row.cells[3].innerText);
-
-    if (sucChua === null || sucChua.trim() === "" ||
-        !Number.isInteger(Number(sucChua)) || Number(sucChua) <= 0) {
-        alert("Sức chứa phải là số nguyên dương!");
-        return;
-    }
-
-    var trangThai = prompt(
-        "Nhập trạng thái: Trống hoặc Đang sử dụng",
-        row.cells[4].innerText
-    );
-
-    if (trangThai === null) {
-        return;
-    }
-
-    if (trangThai !== "Trống" && trangThai !== "Đang sử dụng") {
-        alert("Trạng thái không hợp lệ!");
-        return;
-    }
-
-    row.cells[1].textContent = ten.trim();
-    row.cells[2].textContent = toa.trim();
-    row.cells[3].textContent = sucChua;
-    row.cells[4].textContent = trangThai;
-
-    updateStatistics();
-    updateRoomSelect();
-
-    alert("Cập nhật phòng thành công!");
 }
 
 
-// TẠO Ô DỮ LIỆU
-function addCell(row, value) {
-    var cell = row.insertCell();
-    cell.textContent = value;
+// Hiển thị danh sách phòng
+function hienThiPhong() {
+    var roomTable = document.getElementById("roomTable");
+
+    if (!roomTable) return;
+
+    roomTable.innerHTML = "";
+
+    rooms.forEach(function (room) {
+        roomTable.innerHTML += `
+            <tr>
+                <td>${room.id}</td>
+                <td>${room.name}</td>
+                <td>${room.capacity}</td>
+                <td>${room.status}</td>
+                <td>
+                    <button class="edit-room" data-id="${room.id}">
+                        Sửa
+                    </button>
+                    <button class="delete-btn delete-room" data-id="${room.id}">
+                        Xóa
+                    </button>
+                </td>
+            </tr>
+        `;
+    });
 }
 
 
-/* ==================================================
-   THÀNH VIÊN 3: LỊCH HỌC VÀ ĐẶT PHÒNG
-   ================================================== */
-
-// CẬP NHẬT DANH SÁCH PHÒNG TRONG FORM ĐẶT PHÒNG
+// Cập nhật danh sách phòng trong form đặt phòng
 function updateRoomSelect() {
-    var select = document.getElementById("roomSelect");
-    var rows = document.querySelectorAll("#roomTable tbody tr");
+    var roomSelect = document.getElementById("roomSelect");
 
-    select.innerHTML = "";
+    if (!roomSelect) return;
 
-    rows.forEach(function(row) {
-        var ma = row.cells[0].innerText;
-        var ten = row.cells[1].innerText;
-        var trangThai = row.cells[4].innerText;
+    roomSelect.innerHTML = "";
 
-        if (trangThai === "Trống") {
-            var option = document.createElement("option");
-
-            option.value = ma;
-            option.textContent = ma + " - " + ten;
-
-            select.appendChild(option);
-        }
+    var availableRooms = rooms.filter(function (room) {
+        return room.status === "Trống";
     });
 
-    if (select.options.length === 0) {
-        var option = document.createElement("option");
-
-        option.value = "";
-        option.textContent = "Không có phòng trống";
-
-        select.appendChild(option);
-        select.disabled = true;
-    } else {
-        select.disabled = false;
+    if (availableRooms.length === 0) {
+        roomSelect.innerHTML = '<option value="">Không có phòng trống</option>';
+        return;
     }
+
+    availableRooms.forEach(function (room) {
+        roomSelect.innerHTML += `
+            <option value="${room.id}">
+                ${room.name} - ${room.capacity} chỗ
+            </option>
+        `;
+    });
 }
 
 
-// GỬI YÊU CẦU ĐẶT PHÒNG
-document.getElementById("bookingForm").addEventListener("submit", function(event) {
-    event.preventDefault();
+// ==========================================
+// THÀNH VIÊN 3: ĐẶT PHÒNG HỌC
+// ==========================================
 
-    var room = document.getElementById("roomSelect").value;
-    var date = document.getElementById("bookingDate").value;
-    var start = document.getElementById("startTime").value;
-    var end = document.getElementById("endTime").value;
-    var purpose = document.getElementById("purpose").value.trim();
+function ganSuKienDatPhong() {
+    var bookingForm = document.getElementById("bookingForm");
 
-    if (!room) {
-        alert("Hiện không có phòng trống!");
-        return;
-    }
+    if (!bookingForm) return;
 
-    if (start >= end) {
-        alert("Thời gian kết thúc phải sau thời gian bắt đầu!");
-        return;
-    }
+    bookingForm.addEventListener("submit", function (event) {
+        event.preventDefault();
 
-    if (date < new Date().toLocaleDateString("en-CA")) {
-        alert("Không thể đặt phòng cho ngày đã qua!");
-        return;
-    }
+        var roomId = Number(document.getElementById("roomSelect").value);
+        var date = document.getElementById("bookingDate").value;
+        var startTime = document.getElementById("startTime").value;
+        var endTime = document.getElementById("endTime").value;
+        var purpose = document.getElementById("purpose").value.trim();
 
-    // KIỂM TRA TRÙNG LỊCH ĐÃ ĐƯỢC DUYỆT
-    var calendarRows = document.querySelectorAll("#calendarTable tbody tr");
+        if (!roomId || !date || !startTime || !endTime || !purpose) {
+            alert("Vui lòng nhập đầy đủ thông tin!");
+            return;
+        }
 
-    for (var i = 0; i < calendarRows.length; i++) {
-        var row = calendarRows[i];
+        if (date < layNgayHienTai()) {
+            alert("Không thể đặt phòng vào ngày đã qua!");
+            return;
+        }
 
-        var calendarDate = row.cells[0].innerText;
-        var calendarRoom = row.cells[1].innerText;
-        var calendarStart = row.cells[2].innerText;
-        var calendarEnd = row.cells[3].innerText;
+        if (startTime >= endTime) {
+            alert("Giờ kết thúc phải sau giờ bắt đầu!");
+            return;
+        }
 
-        if (calendarDate === date && calendarRoom === room &&
-            start < calendarEnd && end > calendarStart) {
+        var room = rooms.find(function (item) {
+            return item.id === roomId;
+        });
+
+        if (!room || room.status !== "Trống") {
+            alert("Phòng này hiện không thể đặt!");
+            return;
+        }
+
+        // Kiểm tra trùng lịch với các yêu cầu đã được duyệt
+        var trungLich = calendar.some(function (item) {
+            return item.roomId === roomId &&
+                item.date === date &&
+                startTime < item.endTime &&
+                endTime > item.startTime;
+        });
+
+        if (trungLich) {
             alert("Phòng đã có lịch trong khoảng thời gian này!");
             return;
         }
-    }
 
-    // KIỂM TRA TRÙNG VỚI YÊU CẦU ĐANG CHỜ DUYỆT
-    var requestRows = document.querySelectorAll("#requestTable tbody tr");
+        requests.push({
+            id: nextRequestId++,
+            username: sessionStorage.getItem("username") || "admin",
+            roomId: roomId,
+            roomName: room.name,
+            date: date,
+            startTime: startTime,
+            endTime: endTime,
+            purpose: purpose,
+            status: "Chờ duyệt"
+        });
 
-    for (var j = 0; j < requestRows.length; j++) {
-        var request = requestRows[j];
-
-        if (request.cells[1].innerText === room &&
-            request.cells[4].innerText === "Chờ duyệt") {
-
-            var info = request.cells[2].innerText;
-            var parts = info.match(
-                /^(\d{4}-\d{2}-\d{2}) \((\d{2}:\d{2}) - (\d{2}:\d{2})\)$/
-            );
-
-            if (parts && parts[1] === date &&
-                start < parts[3] && end > parts[2]) {
-                alert("Đã có yêu cầu đặt phòng trùng thời gian đang chờ duyệt!");
-                return;
-            }
-        }
-    }
-
-    var row = document.querySelector("#requestTable tbody").insertRow();
-
-    addCell(row, sessionStorage.getItem("username") || "Người dùng");
-    addCell(row, room);
-    addCell(row, date + " (" + start + " - " + end + ")");
-    addCell(row, purpose);
-    addCell(row, "Chờ duyệt");
-
-    var cell = row.insertCell();
-
-    var approveButton = document.createElement("button");
-    approveButton.className = "approve-request";
-    approveButton.innerText = "Duyệt";
-
-    var rejectButton = document.createElement("button");
-    rejectButton.className = "reject-request";
-    rejectButton.innerText = "Từ chối";
-
-    cell.appendChild(approveButton);
-    cell.appendChild(rejectButton);
-
-    this.reset();
-
-    updateRequestStatistics();
-
-    alert("Gửi yêu cầu đặt phòng thành công!");
-});
-
-
-/* ==================================================
-   THÀNH VIÊN 4: DUYỆT VÀ TỪ CHỐI YÊU CẦU
-   ================================================== */
-
-document.querySelector("#requestTable tbody").addEventListener("click", function(event) {
-    var button = event.target;
-    var row = button.closest("tr");
-
-    if (!row) {
-        return;
-    }
-
-    if (button.classList.contains("approve-request")) {
-        approveRequest(row);
-    }
-
-    if (button.classList.contains("reject-request")) {
-        rejectRequest(row);
-    }
-});
-
-
-// DUYỆT YÊU CẦU
-function approveRequest(row) {
-    if (row.cells[4].innerText !== "Chờ duyệt") {
-        alert("Yêu cầu này đã được xử lý!");
-        return;
-    }
-
-    var room = row.cells[1].innerText;
-    var info = row.cells[2].innerText;
-
-    var parts = info.match(
-        /^(\d{4}-\d{2}-\d{2}) \((\d{2}:\d{2}) - (\d{2}:\d{2})\)$/
-    );
-
-    if (!parts) {
-        alert("Thông tin ngày giờ không hợp lệ!");
-        return;
-    }
-
-    var date = parts[1];
-    var start = parts[2];
-    var end = parts[3];
-
-    // KIỂM TRA LỊCH ĐÃ DUYỆT CÓ BỊ TRÙNG KHÔNG
-    var calendarRows = document.querySelectorAll("#calendarTable tbody tr");
-
-    for (var i = 0; i < calendarRows.length; i++) {
-        var calendar = calendarRows[i];
-
-        if (calendar.cells[0].innerText === date &&
-            calendar.cells[1].innerText === room &&
-            start < calendar.cells[3].innerText &&
-            end > calendar.cells[2].innerText) {
-            alert("Không thể duyệt vì lịch phòng bị trùng!");
-            return;
-        }
-    }
-
-    row.cells[4].textContent = "Đã duyệt";
-
-    // THÊM LỊCH HỌC SAU KHI DUYỆT
-    var calendarBody = document.querySelector("#calendarTable tbody");
-    var newCalendarRow = calendarBody.insertRow();
-
-    addCell(newCalendarRow, date);
-    addCell(newCalendarRow, room);
-    addCell(newCalendarRow, start);
-    addCell(newCalendarRow, end);
-    addCell(newCalendarRow, row.cells[3].innerText);
-
-    updateRequestStatistics();
-
-    alert("Đã duyệt yêu cầu đặt phòng!");
-}
-
-
-// TỪ CHỐI YÊU CẦU
-function rejectRequest(row) {
-    if (row.cells[4].innerText !== "Chờ duyệt") {
-        alert("Yêu cầu này đã được xử lý!");
-        return;
-    }
-
-    if (confirm("Bạn có chắc muốn từ chối yêu cầu này không?")) {
-        row.cells[4].textContent = "Từ chối";
-
+        luuDuLieu();
+        hienThiYeuCau();
         updateRequestStatistics();
 
-        alert("Đã từ chối yêu cầu đặt phòng!");
-    }
+        bookingForm.reset();
+
+        alert("Đã gửi yêu cầu đặt phòng!");
+    });
 }
 
 
-/* ==================================================
-   THÀNH VIÊN 1: QUẢN LÝ NGƯỜI DÙNG
-   ================================================== */
+// Lấy ngày hiện tại theo giờ địa phương
+function layNgayHienTai() {
+    var today = new Date();
+    var year = today.getFullYear();
+    var month = String(today.getMonth() + 1).padStart(2, "0");
+    var day = String(today.getDate()).padStart(2, "0");
 
-// THÊM NGƯỜI DÙNG
-document.getElementById("addUserBtn").addEventListener("click", function() {
-    var ten = prompt("Nhập họ tên:");
-
-    if (ten === null || ten.trim() === "") {
-        return;
-    }
-
-    var email = prompt("Nhập email:");
-
-    if (email === null || email.trim() === "") {
-        return;
-    }
-
-    email = email.trim();
-
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        alert("Email không hợp lệ!");
-        return;
-    }
-
-    var rows = document.querySelectorAll("#userTable tbody tr");
-
-    for (var i = 0; i < rows.length; i++) {
-        if (rows[i].cells[2].innerText.toLowerCase() === email.toLowerCase()) {
-            alert("Email đã tồn tại!");
-            return;
-        }
-    }
-
-    var ma = "U" + String(Date.now()).slice(-6);
-
-    var row = document.querySelector("#userTable tbody").insertRow();
-
-    addCell(row, ma);
-    addCell(row, ten.trim());
-    addCell(row, email);
-    addCell(row, "Người dùng");
-
-    var cell = row.insertCell();
-
-    var deleteButton = document.createElement("button");
-    deleteButton.className = "delete-user";
-    deleteButton.innerText = "Xóa";
-
-    cell.appendChild(deleteButton);
-
-    alert("Thêm người dùng thành công!");
-});
+    return year + "-" + month + "-" + day;
+}
 
 
-// XÓA NGƯỜI DÙNG
-document.querySelector("#userTable tbody").addEventListener("click", function(event) {
-    if (event.target.classList.contains("delete-user")) {
-        var row = event.target.closest("tr");
+// ==========================================
+// THÀNH VIÊN 4: DUYỆT YÊU CẦU ĐẶT PHÒNG
+// ==========================================
 
-        if (confirm("Bạn có chắc muốn xóa người dùng này không?")) {
-            row.remove();
-        }
-    }
-});
+function ganSuKienDuyet() {
+    var requestTable = document.getElementById("requestTable");
 
+    if (!requestTable) return;
 
-/* ==================================================
-   THÀNH VIÊN 5: THỐNG KÊ VÀ BÁO CÁO
-   ================================================== */
+    requestTable.addEventListener("click", function (event) {
+        var id = Number(event.target.dataset.id);
 
-// CẬP NHẬT SỐ LƯỢNG PHÒNG
-function updateStatistics() {
-    var rows = document.querySelectorAll("#roomTable tbody tr");
+        if (event.target.classList.contains("approve-request")) {
+            var request = requests.find(function (item) {
+                return item.id === id;
+            });
 
-    var total = rows.length;
-    var used = 0;
-    var empty = 0;
+            if (!request || request.status !== "Chờ duyệt") {
+                return;
+            }
 
-    rows.forEach(function(row) {
-        var status = row.cells[4].innerText;
+            var trungLich = calendar.some(function (item) {
+                return item.roomId === request.roomId &&
+                    item.date === request.date &&
+                    request.startTime < item.endTime &&
+                    request.endTime > item.startTime;
+            });
 
-        if (status === "Đang sử dụng") {
-            used++;
+            if (trungLich) {
+                alert("Không thể duyệt vì phòng đã có lịch trùng!");
+                return;
+            }
+
+            request.status = "Đã duyệt";
+
+            calendar.push({
+                requestId: request.id,
+                roomId: request.roomId,
+                roomName: request.roomName,
+                date: request.date,
+                startTime: request.startTime,
+                endTime: request.endTime,
+                purpose: request.purpose,
+                username: request.username
+            });
+
+            luuDuLieu();
+            hienThiYeuCau();
+            hienThiLich();
+            updateRequestStatistics();
+
+            alert("Đã duyệt yêu cầu!");
         }
 
-        if (status === "Trống") {
-            empty++;
+        if (event.target.classList.contains("reject-request")) {
+            var rejectRequest = requests.find(function (item) {
+                return item.id === id;
+            });
+
+            if (rejectRequest && rejectRequest.status === "Chờ duyệt") {
+                rejectRequest.status = "Từ chối";
+
+                luuDuLieu();
+                hienThiYeuCau();
+                updateRequestStatistics();
+
+                alert("Đã từ chối yêu cầu!");
+            }
         }
     });
-
-    document.getElementById("totalRooms").innerText = total;
-    document.getElementById("usedRooms").innerText = used;
-    document.getElementById("emptyRooms").innerText = empty;
-
-    document.getElementById("reportTotal").innerText = total;
-    document.getElementById("reportUsed").innerText = used;
-    document.getElementById("reportEmpty").innerText = empty;
 }
 
 
-// CẬP NHẬT SỐ YÊU CẦU CHỜ DUYỆT
-function updateRequestStatistics() {
-    var rows = document.querySelectorAll("#requestTable tbody tr");
-    var pending = 0;
+// Hiển thị yêu cầu đặt phòng
+function hienThiYeuCau() {
+    var requestTable = document.getElementById("requestTable");
 
-    rows.forEach(function(row) {
-        if (row.cells[4].innerText === "Chờ duyệt") {
-            pending++;
-        }
-    });
+    if (!requestTable) return;
 
-    document.getElementById("pendingRequests").innerText = pending;
-    document.getElementById("reportPending").innerText = pending;
-}
+    requestTable.innerHTML = "";
 
+    requests.forEach(function (request) {
+        var actions = "";
 
-// IN BÁO CÁO
-document.getElementById("printReportBtn").addEventListener("click", function() {
-    window.print();
-});
-
-
-/* ==================================================
-   THÀNH VIÊN 5: TÌM KIẾM DỮ LIỆU
-   Tìm kiếm trong bảng của trang đang mở.
-   ================================================== */
-
-document.getElementById("searchInput").addEventListener("input", function() {
-    var keyword = this.value.toLowerCase().trim();
-
-    var activePage = document.querySelector(".page:not(.hidden)");
-
-    if (!activePage) {
-        return;
-    }
-
-    var rows = activePage.querySelectorAll("tbody tr");
-
-    rows.forEach(function(row) {
-        var text = row.innerText.toLowerCase();
-
-        if (text.includes(keyword)) {
-            row.style.display = "";
+        if (request.status === "Chờ duyệt") {
+            actions = `
+                <button class="approve-btn approve-request"
+                    data-id="${request.id}">Duyệt</button>
+                <button class="delete-btn reject-request"
+                    data-id="${request.id}">Từ chối</button>
+            `;
         } else {
-            row.style.display = "none";
+            actions = "-";
         }
+
+        requestTable.innerHTML += `
+            <tr>
+                <td>${request.username}</td>
+                <td>${request.roomName}</td>
+                <td>${request.date}</td>
+                <td>${request.startTime} - ${request.endTime}</td>
+                <td>${request.purpose}</td>
+                <td>${request.status}</td>
+                <td>${actions}</td>
+            </tr>
+        `;
     });
-});
+}
 
 
-// KHÔI PHỤC HIỂN THỊ CÁC DÒNG KHI CHUYỂN TRANG
-function resetSearch() {
-    var rows = document.querySelectorAll("tbody tr");
+// ==========================================
+// THÀNH VIÊN 3: LỊCH SỬ SỬ DỤNG PHÒNG
+// ==========================================
 
-    rows.forEach(function(row) {
-        row.style.display = "";
+function hienThiLich() {
+    var calendarTable = document.getElementById("calendarTable");
+
+    if (!calendarTable) return;
+
+    calendarTable.innerHTML = "";
+
+    calendar.forEach(function (item) {
+        calendarTable.innerHTML += `
+            <tr>
+                <td>${item.roomName}</td>
+                <td>${item.date}</td>
+                <td>${item.startTime}</td>
+                <td>${item.endTime}</td>
+                <td>${item.purpose}</td>
+                <td>${item.username}</td>
+            </tr>
+        `;
     });
+}
+
+
+// ==========================================
+// THÀNH VIÊN 1: QUẢN LÝ NGƯỜI DÙNG
+// ==========================================
+
+function ganSuKienNguoiDung() {
+    var userForm = document.getElementById("userForm");
+
+    if (userForm) {
+        userForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            var username = document.getElementById("newUsername")
+                .value.trim();
+            var role = document.getElementById("newRole").value;
+
+            if (username === "") {
+                alert("Vui lòng nhập tên người dùng!");
+                return;
+            }
+
+            var daTonTai = users.some(function (user) {
+                return user.username.toLowerCase() === username.toLowerCase();
+            });
+
+            if (daTonTai) {
+                alert("Tên người dùng đã tồn tại!");
+                return;
+            }
+
+            users.push({
+                username: username,
+                role: role
+            });
+
+            luuDuLieu();
+            hienThiNguoiDung();
+            userForm.reset();
+
+            alert("Đã thêm người dùng!");
+        });
+    }
+
+    var userTable = document.getElementById("userTable");
+
+    if (userTable) {
+        userTable.addEventListener("click", function (event) {
+            if (!event.target.classList.contains("delete-user")) {
+                return;
+            }
+
+            var username = event.target.dataset.username;
+
+            if (username === "admin") {
+                alert("Không thể xóa tài khoản admin!");
+                return;
+            }
+
+            users = users.filter(function (user) {
+                return user.username !== username;
+            });
+
+            luuDuLieu();
+            hienThiNguoiDung();
+        });
+    }
+}
+
+
+// Hiển thị người dùng
+function hienThiNguoiDung() {
+    var userTable = document.getElementById("userTable");
+
+    if (!userTable) return;
+
+    userTable.innerHTML = "";
+
+    users.forEach(function (user) {
+        userTable.innerHTML += `
+            <tr>
+                <td>${user.username}</td>
+                <td>${user.role}</td>
+                <td>
+                    ${
+                        user.username === "admin"
+                            ? "-"
+                            : `<button class="delete-btn delete-user"
+                                data-username="${user.username}">Xóa</button>`
+                    }
+                </td>
+            </tr>
+        `;
+    });
+}
+
+
+// ==========================================
+// THÀNH VIÊN 5: THỐNG KÊ
+// ==========================================
+
+function updateStatistics() {
+    var total = rooms.length;
+
+    var used = rooms.filter(function (room) {
+        return room.status === "Đang sử dụng";
+    }).length;
+
+    var empty = total - used;
+
+    ganGiaTri("totalRooms", total);
+    ganGiaTri("usedRooms", used);
+    ganGiaTri("emptyRooms", empty);
+
+    ganGiaTri("reportTotal", total);
+    ganGiaTri("reportUsed", used);
+    ganGiaTri("reportEmpty", empty);
+}
+
+
+// Đếm yêu cầu đang chờ duyệt
+function updateRequestStatistics() {
+    var pending = requests.filter(function (request) {
+        return request.status === "Chờ duyệt";
+    }).length;
+
+    ganGiaTri("pendingRequests", pending);
+    ganGiaTri("reportPending", pending);
+}
+
+
+// Gán giá trị cho phần tử HTML
+function ganGiaTri(id, value) {
+    var element = document.getElementById(id);
+
+    if (element) {
+        element.innerText = value;
+    }
+}
+
+
+// Nút in báo cáo
+function ganSuKienBaoCao() {
+    var printButton = document.getElementById("printReportBtn");
+
+    if (printButton) {
+        printButton.addEventListener("click", function () {
+            window.print();
+        });
+    }
 }
 ```
