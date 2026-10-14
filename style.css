@@ -1,3 +1,25 @@
+```css
+/* ==================================================
+   WEBSITE QUẢN LÝ PHÒNG HỌC
+
+   THÀNH VIÊN 1:
+   Giao diện đăng nhập, sidebar, menu, người dùng.
+
+   THÀNH VIÊN 2:
+   Giao diện quản lý phòng học.
+
+   THÀNH VIÊN 3:
+   Giao diện lịch học và đặt phòng.
+
+   THÀNH VIÊN 4:
+   Giao diện yêu cầu đặt phòng.
+
+   THÀNH VIÊN 5:
+   Giao diện trang chủ, thống kê và báo cáo.
+   ================================================== */
+
+
+/* THÀNH VIÊN 1: CSS CHUNG */
 * {
     box-sizing: border-box;
 }
@@ -7,20 +29,88 @@ body {
     font-family: Arial, sans-serif;
     background: #f3f6fb;
     color: #243247;
+    font-size: 14px;
 }
 
+.hidden {
+    display: none !important;
+}
+
+
+/* THÀNH VIÊN 1: GIAO DIỆN ĐĂNG NHẬP */
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #17365d;
+    padding: 20px;
+}
+
+.login-box {
+    width: 360px;
+    max-width: 100%;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px #102744;
+}
+
+.login-box h2 {
+    text-align: center;
+    color: #17365d;
+    font-size: 21px;
+}
+
+.login-box p {
+    text-align: center;
+    color: #68758a;
+}
+
+.login-box label {
+    display: block;
+    margin-top: 15px;
+}
+
+.login-box input {
+    width: 100%;
+    padding: 11px;
+    margin-top: 7px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.login-box button {
+    width: 100%;
+    margin: 20px 0 10px;
+}
+
+.demo-account {
+    text-align: center;
+    font-size: 12px;
+    color: #68758a;
+    line-height: 1.8;
+}
+
+
+/* THÀNH VIÊN 1: SIDEBAR VÀ MENU */
 .sidebar {
-    width: 220px;
+    width: 230px;
     height: 100vh;
     background: #17365d;
     position: fixed;
+    top: 0;
+    left: 0;
     padding: 15px;
     color: white;
+    overflow-y: auto;
 }
 
 .sidebar h2 {
-    font-size: 18px;
+    font-size: 19px;
+    line-height: 1.5;
     margin-bottom: 30px;
+    text-align: center;
 }
 
 .sidebar a {
@@ -32,12 +122,27 @@ body {
     border-radius: 5px;
 }
 
-.sidebar a:hover {
+.sidebar a:hover,
+.sidebar a.active {
     background: #2878e8;
 }
 
+
+/* THÀNH VIÊN 1: NÚT ĐĂNG XUẤT */
+.logout-btn {
+    width: 100%;
+    margin-top: 25px;
+    background: #dc3545;
+}
+
+.logout-btn:hover {
+    background: #b52a37;
+}
+
+
+/* KHU VỰC NỘI DUNG CHUNG */
 .main {
-    margin-left: 220px;
+    margin-left: 230px;
     padding: 20px;
 }
 
@@ -46,28 +151,51 @@ body {
     padding: 15px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 25px;
     border-radius: 8px;
+    gap: 15px;
 }
 
 .header input {
+    width: 280px;
+    max-width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
 }
 
+#currentUser {
+    font-weight: bold;
+}
+
+
+/* THÀNH VIÊN 5: CÁC TRANG VÀ THỐNG KÊ */
+.page {
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    min-height: 300px;
+}
+
+.page h1 {
+    margin-top: 0;
+    color: #17365d;
+}
+
 .cards {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 15px;
     margin-top: 25px;
+    margin-bottom: 25px;
 }
 
 .card {
-    background: white;
+    background: #f8faff;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 5px #ddd;
+    box-shadow: 0 2px 8px #ddd;
 }
 
 .card p {
@@ -77,22 +205,15 @@ body {
 .card h2 {
     color: #2878e8;
     font-size: 28px;
+    margin-bottom: 0;
 }
 
-.page {
-    background: white;
-    padding: 25px;
-    border-radius: 8px;
-}
 
-.hidden {
-    display: none;
-}
-
+/* DÙNG CHUNG: NÚT */
 button {
     background: #2878e8;
     color: white;
-    padding: 9px 14px;
+    padding: 10px 14px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -103,55 +224,155 @@ button:hover {
     background: #165bb5;
 }
 
+
+/* THÀNH VIÊN 2: BẢNG QUẢN LÝ PHÒNG HỌC
+   THÀNH VIÊN 3: BẢNG LỊCH HỌC
+   THÀNH VIÊN 4: BẢNG YÊU CẦU ĐẶT PHÒNG
+   THÀNH VIÊN 1: BẢNG NGƯỜI DÙNG */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+    background: white;
 }
 
-th, td {
+th,
+td {
     border-bottom: 1px solid #ddd;
     padding: 13px;
     text-align: left;
+    white-space: nowrap;
 }
 
 th {
     background: #f3f6fb;
+    color: #17365d;
 }
 
-form {
-    max-width: 500px;
+tbody tr:hover {
+    background: #f8faff;
 }
 
-label {
+
+/* THÀNH VIÊN 3: FORM ĐẶT PHÒNG */
+.content-form {
+    max-width: 550px;
+}
+
+.content-form label {
     display: block;
     margin-top: 15px;
 }
 
-form input,
-form select,
-form textarea {
+.content-form input,
+.content-form select,
+.content-form textarea {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
     border: 1px solid #ddd;
     border-radius: 5px;
+    font-family: Arial, sans-serif;
 }
 
-form textarea {
-    height: 90px;
+.content-form textarea {
+    height: 100px;
+    resize: vertical;
 }
 
-@media (max-width: 800px) {
-    .sidebar {
-        width: 170px;
+
+/* THÀNH VIÊN 4: TRẠNG THÁI YÊU CẦU */
+.status-pending {
+    color: #d97706;
+    font-weight: bold;
+}
+
+.status-approved {
+    color: #16803c;
+    font-weight: bold;
+}
+
+.status-rejected {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+
+/* THÀNH VIÊN 5: IN BÁO CÁO */
+@media print {
+    .sidebar,
+    .header,
+    #printReportBtn {
+        display: none !important;
     }
 
     .main {
-        margin-left: 170px;
+        margin: 0;
+        padding: 0;
+    }
+
+    .page {
+        box-shadow: none;
+    }
+}
+
+
+/* GIAO DIỆN MÁY TÍNH BẢNG */
+@media (max-width: 1000px) {
+    .cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .page {
+        padding: 18px;
+    }
+}
+
+
+/* GIAO DIỆN ĐIỆN THOẠI */
+@media (max-width: 600px) {
+    .sidebar {
+        width: 150px;
+        padding: 8px;
+    }
+
+    .sidebar h2 {
+        font-size: 14px;
+    }
+
+    .sidebar a {
+        font-size: 12px;
+        padding: 10px 5px;
+    }
+
+    .main {
+        margin-left: 150px;
+        padding: 8px;
+    }
+
+    .page {
+        padding: 12px;
     }
 
     .cards {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
+    }
+
+    .header {
+        flex-wrap: wrap;
+    }
+
+    .header input {
+        width: 100%;
+    }
+
+    .card {
+        padding: 15px;
     }
 }
+```
