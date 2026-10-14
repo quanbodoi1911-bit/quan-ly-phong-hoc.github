@@ -1,456 +1,118 @@
-/* ==========================================
-   PHẦN CHUNG: GIAO DIỆN TOÀN WEBSITE
-   ========================================== */
-
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f3f6fb;
-    color: #243247;
-    font-size: 14px;
-}
-
-.hidden {
-    display: none !important;
-}
-
-
-/* ==========================================
-   THÀNH VIÊN 1: GIAO DIỆN ĐĂNG NHẬP
-   ========================================== */
-
-.login-page {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    background: #17365d;
-}
-
-.login-box {
-    width: 360px;
-    max-width: 100%;
-    padding: 30px;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 5px 20px #102744;
-}
-
-.login-box h2 {
-    color: #17365d;
-    text-align: center;
-    font-size: 21px;
-}
-
-.login-box > p {
-    text-align: center;
-}
-
-.login-box label {
-    display: block;
-    margin-top: 15px;
-}
-
-.login-box input {
-    width: 100%;
-    padding: 11px;
-    margin-top: 7px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-#loginMessage {
-    color: red;
-}
-
-.demo-account {
-    margin-top: 15px;
-    padding: 10px;
-    text-align: center;
-    background: #f3f6fb;
-    border-radius: 5px;
-    line-height: 1.8;
-}
-
-
-/* ==========================================
-   THÀNH VIÊN 1: SIDEBAR VÀ ĐIỀU HƯỚNG
-   ========================================== */
-
-.sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 230px;
-    height: 100vh;
-    padding: 15px;
-    overflow-y: auto;
-    background: #17365d;
-    color: white;
-}
-
-.sidebar h2 {
-    margin-bottom: 30px;
-    text-align: center;
-    font-size: 19px;
-    line-height: 1.5;
-}
-
-.sidebar a {
-    display: block;
-    padding: 13px 10px;
-    margin-bottom: 5px;
-    border-radius: 5px;
-    color: white;
-    text-decoration: none;
-}
-
-.sidebar a:hover,
-.sidebar a.active {
-    background: #2878e8;
-}
-
-.logout-btn {
-    width: 100%;
-    margin-top: 25px;
-    background: #dc3545;
-}
-
-.logout-btn:hover {
-    background: #b52a37;
-}
-
-
-/* ==========================================
-   PHẦN CHUNG: KHU VỰC NỘI DUNG
-   ========================================== */
-
-.main {
-    min-height: 100vh;
-    margin-left: 230px;
-    padding: 20px;
-}
-
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 25px;
-    padding: 15px;
-    background: white;
-    border-radius: 8px;
-}
-
-.header input {
-    width: 280px;
-    max-width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-#currentUser {
-    font-weight: bold;
-}
-
-.page {
-    min-height: 300px;
-    padding: 25px;
-    background: white;
-    border-radius: 8px;
-}
-
-.page h1 {
-    margin-top: 0;
-    color: #17365d;
-}
-
-
-/* ==========================================
-   THÀNH VIÊN 2: GIAO DIỆN QUẢN LÝ PHÒNG
-   ========================================== */
-
-#rooms > button {
-    margin-bottom: 10px;
-}
-
-.content-form {
-    max-width: 550px;
-    margin: 20px 0;
-    padding: 20px;
-    background: #f8faff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-}
-
-.content-form h3 {
-    margin-top: 0;
-    color: #17365d;
-}
-
-.content-form label {
-    display: block;
-    margin-top: 15px;
-}
-
-.content-form input,
-.content-form select,
-.content-form textarea {
-    width: 100%;
-    margin-top: 5px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-family: Arial, sans-serif;
-}
-
-.content-form textarea {
-    height: 100px;
-    resize: vertical;
-}
-
-.cancel-btn {
-    background: #6c757d;
-}
-
-
-/* ==========================================
-   PHẦN CHUNG: NÚT BẤM
-   ========================================== */
-
-button {
-    padding: 10px 14px;
-    margin: 3px;
-    border: none;
-    border-radius: 5px;
-    background: #2878e8;
-    color: white;
-    cursor: pointer;
-}
-
-button:hover {
-    background: #165bb5;
-}
-
-.delete-btn {
-    background: #dc3545;
-}
-
-.delete-btn:hover {
-    background: #b52a37;
-}
-
-.approve-btn {
-    background: #16803c;
-}
-
-.approve-btn:hover {
-    background: #11632e;
-}
-
-
-/* ==========================================
-   THÀNH VIÊN 2, 3, 4:
-   GIAO DIỆN BẢNG PHÒNG, LỊCH VÀ YÊU CẦU
-   ========================================== */
-
-.table-container {
-    width: 100%;
-    overflow-x: auto;
-}
-
-table {
-    width: 100%;
-    margin-top: 20px;
-    border-collapse: collapse;
-    background: white;
-}
-
-th,
-td {
-    padding: 13px;
-    border-bottom: 1px solid #ddd;
-    text-align: left;
-}
-
-th {
-    background: #f3f6fb;
-    color: #17365d;
-}
-
-tbody tr:hover {
-    background: #f8faff;
-}
-
-
-/* ==========================================
-   THÀNH VIÊN 3: GIAO DIỆN ĐẶT PHÒNG VÀ LỊCH
-   ========================================== */
-
-#bookingForm {
-    max-width: 600px;
-}
-
-#calendarTable th {
-    background: #e7efff;
-}
-
-
-/* ==========================================
-   THÀNH VIÊN 4: TRẠNG THÁI YÊU CẦU
-   ========================================== */
-
-.status-pending {
-    color: #d97706;
-    font-weight: bold;
-}
-
-.status-approved {
-    color: #16803c;
-    font-weight: bold;
-}
-
-.status-rejected {
-    color: #dc3545;
-    font-weight: bold;
-}
-
-
-/* ==========================================
-   THÀNH VIÊN 5: TRANG CHỦ VÀ THỐNG KÊ
-   ========================================== */
-
-.cards {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 15px;
-    margin: 25px 0;
-}
-
-.card {
-    padding: 20px;
-    background: #f8faff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px #ddd;
-}
-
-.card p {
-    color: #68758a;
-}
-
-.card h2 {
-    margin-bottom: 0;
-    color: #2878e8;
-    font-size: 28px;
-}
-
-.welcome-box {
-    margin-top: 25px;
-    padding: 20px;
-    background: #f8faff;
-    border-left: 4px solid #2878e8;
-    border-radius: 5px;
-}
-
-
-/* ==========================================
-   THÀNH VIÊN 5: GIAO DIỆN BÁO CÁO
-   ========================================== */
-
-#reports .card {
-    border-top: 3px solid #2878e8;
-}
-
-
-/* ==========================================
-   PHẦN CHUNG: IN BÁO CÁO
-   ========================================== */
-
-@media print {
-    .sidebar,
-    .header,
-    #printReportBtn {
-        display: none !important;
+// ==========================================
+// PHẦN CHUNG: DỮ LIỆU TOÀN WEBSITE
+// ==========================================
+
+var rooms = [];
+var requests = [];
+var calendar = [];
+var users = [];
+var currentUser = null;
+
+
+// ==========================================
+// PHẦN CHUNG: LƯU VÀ ĐỌC DỮ LIỆU
+// ==========================================
+
+function docDuLieu(key, macDinh) {
+    try {
+        var data = localStorage.getItem(key);
+
+        if (data) {
+            var ketQua = JSON.parse(data);
+
+            if (Array.isArray(ketQua)) {
+                return ketQua;
+            }
+        }
+    } catch (error) {
+        console.error("Lỗi đọc dữ liệu:", key, error);
     }
 
-    .main {
-        margin: 0;
-        padding: 0;
-    }
+    return macDinh;
+}
 
-    .page {
-        box-shadow: none;
-    }
+function luuDuLieu() {
+    localStorage.setItem("rooms", JSON.stringify(rooms));
+    localStorage.setItem("requests", JSON.stringify(requests));
+    localStorage.setItem("calendar", JSON.stringify(calendar));
+    localStorage.setItem("users", JSON.stringify(users));
 }
 
 
-/* ==========================================
-   PHẦN CHUNG: GIAO DIỆN MÁY TÍNH BẢNG
-   ========================================== */
+// ==========================================
+// THÀNH VIÊN 1: KHỞI TẠO DỮ LIỆU
+// ==========================================
 
-@media (max-width: 1000px) {
-    .cards {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+function khoiTaoDuLieu() {
+    rooms = docDuLieu("rooms", []);
+    requests = docDuLieu("requests", []);
+    calendar = docDuLieu("calendar", []);
+    users = docDuLieu("users", []);
+
+    // Tạo phòng mẫu nếu chưa có dữ liệu phòng
+
+    if (rooms.length === 0) {
+        rooms = [
+            {
+                id: 1,
+                code: "A101",
+                name: "Phòng học A101",
+                building: "Tòa A",
+                capacity: 40,
+                status: "Trống"
+            },
+            {
+                id: 2,
+                code: "A102",
+                name: "Phòng học A102",
+                building: "Tòa A",
+                capacity: 50,
+                status: "Trống"
+            }
+        ];
     }
 
-    .page {
-        padding: 18px;
+    // Tạo tài khoản quản trị viên mặc định
+
+    if (!users.some(function (user) {
+        return user.username === "admin";
+    })) {
+        users.push({
+            id: 1,
+            username: "admin",
+            password: "123456",
+            fullName: "Quản trị viên",
+            email: "admin@example.com",
+            role: "Quản trị viên"
+        });
     }
+
+    luuDuLieu();
+
+    hienThiPhong();
+    hienThiNguoiDung();
+    hienThiYeuCau();
+    hienThiLich();
+    capNhatThongKe();
+    capNhatDanhSachPhong();
 }
 
 
-/* ==========================================
-   PHẦN CHUNG: GIAO DIỆN ĐIỆN THOẠI
-   ========================================== */
+// ==========================================
+// THÀNH VIÊN 1: ĐĂNG NHẬP
+// ==========================================
 
-@media (max-width: 600px) {
-    .sidebar {
-        width: 150px;
-        padding: 8px;
+function xuLyDangNhap() {
+    var loginForm = document.getElementById("loginForm");
+
+    if (!loginForm) {
+        console.error("Không tìm thấy form đăng nhập!");
+        return;
     }
 
-    .sidebar h2 {
-        font-size: 14px;
-    }
+    loginForm.addEventListener("submit", function (event) {
+        event.preventDefault();
 
-    .sidebar a {
-        padding: 10px 5px;
-        font-size: 12px;
-    }
-
-    .main {
-        margin-left: 150px;
-        padding: 8px;
-    }
-
-    .page {
-        padding: 12px;
-    }
-
-    .cards {
-        grid-template-columns: 1fr;
-    }
-
-    .header {
-        flex-wrap: wrap;
-    }
-
-    .header input {
-        width: 100%;
-    }
-
-    .card {
-        padding: 15px;
-    }
-
-    th,
-    td {
-        padding: 9px;
-    }
-}
+        var username = document.getElementById("username").value.trim();
+        var password = document.getElementById("password").value;
+        var loginMess
