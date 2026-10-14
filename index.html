@@ -136,59 +136,78 @@
 
 
             <!-- THÀNH VIÊN 2: QUẢN LÝ PHÒNG HỌC -->
-            <div id="rooms" class="page hidden">
+<div id="rooms" class="page hidden">
+    <h1>Quản lý phòng học</h1>
 
-                <h1>Quản lý phòng học</h1>
+    <button id="addRoomBtn" type="button">+ Thêm phòng</button>
 
-                <button id="addRoomBtn">+ Thêm phòng</button>
+    <form id="roomForm" class="content-form hidden">
+        <input type="hidden" id="roomId">
 
-                <div class="table-container">
-                    <table id="roomTable">
+        <label>Tên phòng</label>
+        <input type="text" id="roomName" required
+               placeholder="Nhập tên phòng">
 
-                        <thead>
-                            <tr>
-                                <th>Mã phòng</th>
-                                <th>Tên phòng</th>
-                                <th>Tòa nhà</th>
-                                <th>Sức chứa</th>
-                                <th>Trạng thái</th>
-                                <th>Thao tác</th>
-                            </tr>
-                        </thead>
+        <label>Tòa nhà</label>
+        <input type="text" id="roomBuilding" required
+               placeholder="Ví dụ: Tòa A">
 
-                        <tbody>
-                            <tr>
-                                <td>A101</td>
-                                <td>Phòng A101</td>
-                                <td>Tòa A</td>
-                                <td>50</td>
-                                <td>Trống</td>
-                                <td>
-                                    <button class="edit-room">Sửa</button>
-                                    <button class="delete-room">Xóa</button>
-                                </td>
-                            </tr>
+        <label>Sức chứa</label>
+        <input type="number" id="roomCapacity" min="1" required
+               placeholder="Nhập sức chứa">
 
-                            <tr>
-                                <td>A102</td>
-                                <td>Phòng A102</td>
-                                <td>Tòa A</td>
-                                <td>45</td>
-                                <td>Đang sử dụng</td>
-                                <td>
-                                    <button class="edit-room">Sửa</button>
-                                    <button class="delete-room">Xóa</button>
-                                </td>
-                            </tr>
-                        </tbody>
+        <label>Trạng thái</label>
+        <select id="roomStatus">
+            <option value="Trống">Trống</option>
+            <option value="Đang sử dụng">Đang sử dụng</option>
+        </select>
 
-                    </table>
-                </div>
+        <button type="submit" id="saveRoomBtn">Lưu phòng</button>
+        <button type="button" id="cancelRoomBtn">Hủy</button>
+    </form>
 
-            </div>
+    <div class="table-container">
+        <table id="roomTable">
+            <thead>
+                <tr>
+                    <th>Mã phòng</th>
+                    <th>Tên phòng</th>
+                    <th>Tòa nhà</th>
+                    <th>Sức chứa</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>A101</td>
+                    <td>Phòng A101</td>
+                    <td>Tòa A</td>
+                    <td>50</td>
+                    <td>Trống</td>
+                    <td>
+                        <button type="button" class="edit-room">Sửa</button>
+                        <button type="button" class="delete-room">Xóa</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>A102</td>
+                    <td>Phòng A102</td>
+                    <td>Tòa A</td>
+                    <td>45</td>
+                    <td>Đang sử dụng</td>
+                    <td>
+                        <button type="button" class="edit-room">Sửa</button>
+                        <button type="button" class="delete-room">Xóa</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+```
 
-
-            <!-- THÀNH VIÊN 3: LỊCH HỌC -->
+                <!-- THÀNH VIÊN 3: LỊCH HỌC -->
             <div id="calendar" class="page hidden">
 
                 <h1>Lịch học</h1>
