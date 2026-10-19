@@ -1,0 +1,175 @@
+
+/* ==========================================
+   1. GIAO DIỆN CHUNG
+   ========================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f3f6fb;
+    color: #243247;
+    font-size: 14px;
+}
+
+/* Ẩn form khi chưa cần sử dụng */
+.hidden {
+    display: none !important;
+}
+
+
+/* ==========================================
+   2. KHU VỰC QUẢN LÝ PHÒNG HỌC
+   ========================================== */
+
+.page {
+    min-height: 300px;
+    margin: 20px;
+    padding: 25px;
+    background: white;
+    border-radius: 8px;
+}
+
+/* Tiêu đề trang */
+.page h1 {
+    margin-top: 0;
+    color: #17365d;
+}
+
+/* Khoảng cách dưới nút thêm phòng */
+#rooms > button {
+    margin-bottom: 10px;
+}
+
+
+/* ==========================================
+   3. FORM THÊM VÀ SỬA PHÒNG
+   ========================================== */
+
+.content-form {
+    max-width: 550px;
+    margin: 20px 0;
+    padding: 20px;
+    background: #f8faff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+/* Tiêu đề form */
+.content-form h3 {
+    margin-top: 0;
+    color: #17365d;
+}
+
+/* Nhãn của các ô nhập */
+.content-form label {
+    display: block;
+    margin-top: 15px;
+}
+
+/* Ô nhập dữ liệu và danh sách chọn */
+.content-form input,
+.content-form select {
+    width: 100%;
+    margin-top: 5px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+}
+
+/* Nút hủy */
+.cancel-btn {
+    background: #6c757d;
+}
+
+
+/* ==========================================
+   4. GIAO DIỆN CÁC NÚT BẤM
+   ========================================== */
+
+button {
+    padding: 10px 14px;
+    margin: 3px;
+    border: none;
+    border-radius: 5px;
+    background: #2878e8;
+    color: white;
+    cursor: pointer;
+}
+
+/* Hiệu ứng khi di chuột vào nút */
+button:hover {
+    background: #165bb5;
+}
+
+/* Nút xóa phòng */
+.delete-btn {
+    background: #dc3545;
+}
+
+.delete-btn:hover {
+    background: #b52a37;
+}
+
+
+/* ==========================================
+   5. BẢNG DANH SÁCH PHÒNG HỌC
+   ========================================== */
+
+/* Cho phép cuộn ngang khi bảng quá rộng */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* Bảng dữ liệu */
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    background: white;
+}
+
+/* Ô tiêu đề và ô dữ liệu */
+th,
+td {
+    padding: 13px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+/* Hàng tiêu đề */
+th {
+    background: #f3f6fb;
+    color: #17365d;
+}
+
+/* Hiệu ứng khi di chuột vào hàng */
+tbody tr:hover {
+    background: #f8faff;
+}
+
+
+/* ==========================================
+   6. GIAO DIỆN ĐIỆN THOẠI VÀ MÁY TÍNH BẢNG
+   ========================================== */
+
+@media (max-width: 600px) {
+    .page {
+        margin: 8px;
+        padding: 12px;
+    }
+
+    th,
+    td {
+        padding: 9px;
+    }
+
+    .content-form {
+        padding: 15px;
+    }
+}
