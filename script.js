@@ -1,6 +1,4 @@
-// ==========================================
 // PHẦN CHUNG: DỮ LIỆU TOÀN WEBSITE
-// ==========================================
 
 var rooms = [];
 var requests = [];
@@ -8,10 +6,7 @@ var calendar = [];
 var users = [];
 var currentUser = null;
 
-
-// ==========================================
 // PHẦN CHUNG: LƯU VÀ ĐỌC DỮ LIỆU
-// ==========================================
 
 function docDuLieu(key, macDinh) {
     try {
@@ -38,18 +33,14 @@ function luuDuLieu() {
     localStorage.setItem("users", JSON.stringify(users));
 }
 
+// Quân: KHỞI TẠO DỮ LIỆU
 
-// ==========================================
-// THÀNH VIÊN 1: KHỞI TẠO DỮ LIỆU
-// ==========================================
 
 function khoiTaoDuLieu() {
     rooms = docDuLieu("rooms", []);
     requests = docDuLieu("requests", []);
     calendar = docDuLieu("calendar", []);
     users = docDuLieu("users", []);
-
-    // Tạo phòng mẫu nếu chưa có dữ liệu phòng
 
     if (rooms.length === 0) {
         rooms = [
@@ -72,7 +63,6 @@ function khoiTaoDuLieu() {
         ];
     }
 
-    // Tạo tài khoản quản trị viên mặc định
 
     if (!users.some(function (user) {
         return user.username === "admin";
@@ -97,10 +87,7 @@ function khoiTaoDuLieu() {
     capNhatDanhSachPhong();
 }
 
-
-// ==========================================
-// THÀNH VIÊN 1: ĐĂNG NHẬP
-// ==========================================
+// Quân: ĐĂNG NHẬP
 
 function xuLyDangNhap() {
     var loginForm = document.getElementById("loginForm");
@@ -117,7 +104,6 @@ function xuLyDangNhap() {
         var password = document.getElementById("password").value;
         var loginMessage = document.getElementById("loginMessage");
 
-        // Kiểm tra tài khoản trong danh sách người dùng
 
         var user = users.find(function (item) {
             return item.username === username &&
@@ -137,7 +123,6 @@ function xuLyDangNhap() {
 
             loginForm.reset();
 
-            // Chuyển sang trang chủ sau khi đăng nhập
 
             hienThiTrang("home");
 
@@ -150,10 +135,7 @@ function xuLyDangNhap() {
     });
 }
 
-
-// ==========================================
-// THÀNH VIÊN 1: ĐĂNG XUẤT
-// ==========================================
+// Quân: ĐĂNG XUẤT
 
 function xuLyDangXuat() {
     var logoutBtn = document.getElementById("logoutBtn");
@@ -167,16 +149,12 @@ function xuLyDangXuat() {
         document.getElementById("loginForm").reset();
         document.getElementById("loginMessage").textContent = "";
 
-        // Đưa con trỏ về ô tên đăng nhập
 
         document.getElementById("username").focus();
     });
 }
 
-
-// ==========================================
-// THÀNH VIÊN 1: SIDEBAR VÀ CHUYỂN TRANG
-// ==========================================
+// Quân: SIDEBAR VÀ CHUYỂN TRANG
 
 function hienThiTrang(pageId) {
     var pages = document.querySelectorAll(".page");
@@ -199,8 +177,6 @@ function hienThiTrang(pageId) {
             link.classList.add("active");
         }
     });
-
-    // Cập nhật dữ liệu khi mở từng trang
 
     if (pageId === "home") {
         capNhatThongKe();
@@ -245,10 +221,7 @@ function xuLyChuyenTrang() {
     });
 }
 
-
-// ==========================================
-// THÀNH VIÊN 2: QUẢN LÝ PHÒNG HỌC
-// ==========================================
+// Dặng Long: QUẢN LÝ PHÒNG HỌC
 
 function hienThiPhong() {
     var tbody = document.querySelector("#roomTable tbody");
@@ -326,7 +299,6 @@ function xuLyThemPhong() {
             return;
         }
 
-        // Không cho phép trùng mã phòng
 
         var trungMa = rooms.some(function (room) {
             return room.code.toLowerCase() === code.toLowerCase() &&
@@ -433,10 +405,7 @@ function xoaPhong(id) {
     }
 }
 
-
-// ==========================================
-// THÀNH VIÊN 3: DANH SÁCH PHÒNG ĐẶT
-// ==========================================
+// Linh: DANH SÁCH PHÒNG ĐẶT
 
 function capNhatDanhSachPhong() {
     var roomSelect = document.getElementById("roomSelect");
@@ -471,10 +440,7 @@ function capNhatDanhSachPhong() {
     }
 }
 
-
-// ==========================================
-// THÀNH VIÊN 3: XỬ LÝ ĐẶT PHÒNG
-// ==========================================
+// Linh: XỬ LÝ ĐẶT PHÒNG
 
 function xuLyDatPhong() {
     var bookingForm = document.getElementById("bookingForm");
@@ -517,7 +483,6 @@ function xuLyDatPhong() {
             return;
         }
 
-        // Kiểm tra trùng giờ với yêu cầu đã được duyệt
 
         var biTrung = calendar.some(function (item) {
             return item.roomId === roomId &&
@@ -526,7 +491,6 @@ function xuLyDatPhong() {
                    endTime > item.startTime;
         });
 
-        // Kiểm tra trùng giờ với yêu cầu đang chờ
 
         var choDuyetBiTrung = requests.some(function (item) {
             return item.roomId === roomId &&
@@ -578,10 +542,7 @@ function layNgayHienTai() {
     return nam + "-" + thang + "-" + ngayTrongThang;
 }
 
-
-// ==========================================
-// THÀNH VIÊN 4: HIỂN THỊ YÊU CẦU ĐẶT PHÒNG
-// ==========================================
+// Dặng Long: HIỂN THỊ YÊU CẦU ĐẶT PHÒNG
 
 function hienThiYeuCau() {
     var tbody = document.querySelector("#requestTable tbody");
@@ -644,10 +605,8 @@ function hienThiYeuCau() {
     });
 }
 
+// Dặng Long: DUYỆT YÊU CẦU
 
-// ==========================================
-// THÀNH VIÊN 4: DUYỆT YÊU CẦU
-// ==========================================
 
 function duyetYeuCau(id) {
     var request = requests.find(function (item) {
@@ -656,7 +615,6 @@ function duyetYeuCau(id) {
 
     if (!request) return;
 
-    // Kiểm tra lại lịch trước khi duyệt
 
     var biTrung = calendar.some(function (item) {
         return item.roomId === request.roomId &&
@@ -695,10 +653,7 @@ function duyetYeuCau(id) {
     alert("Đã duyệt yêu cầu đặt phòng!");
 }
 
-
-// ==========================================
-// THÀNH VIÊN 4: TỪ CHỐI YÊU CẦU
-// ==========================================
+// Dặng Long: TỪ CHỐI YÊU CẦU
 
 function tuChoiYeuCau(id) {
     var request = requests.find(function (item) {
@@ -718,10 +673,7 @@ function tuChoiYeuCau(id) {
     }
 }
 
-
-// ==========================================
-// THÀNH VIÊN 3: HIỂN THỊ LỊCH HỌC
-// ==========================================
+// Linh: HIỂN THỊ LỊCH HỌC
 
 function hienThiLich() {
     var tbody = document.querySelector("#calendarTable tbody");
@@ -757,10 +709,7 @@ function hienThiLich() {
     luuDuLieu();
 }
 
-
-// ==========================================
-// THÀNH VIÊN 1: QUẢN LÝ NGƯỜI DÙNG
-// ==========================================
+// Quân: QUẢN LÝ NGƯỜI DÙNG
 
 function hienThiNguoiDung() {
     var tbody = document.querySelector("#userTable tbody");
@@ -779,7 +728,6 @@ function hienThiNguoiDung() {
 
         var actionCell = row.insertCell();
 
-        // Không cho xóa tài khoản admin mặc định
 
         if (user.username !== "admin") {
             var xoaBtn = document.createElement("button");
@@ -889,10 +837,7 @@ function xoaNguoiDung(id) {
     }
 }
 
-
-// ==========================================
-// THÀNH VIÊN 5: THỐNG KÊ TRANG CHỦ VÀ BÁO CÁO
-// ==========================================
+// Lượng: THỐNG KÊ TRANG CHỦ VÀ BÁO CÁO
 
 function capNhatThongKe() {
     var tongPhong = rooms.length;
@@ -909,14 +854,11 @@ function capNhatThongKe() {
         return request.status === "Đang chờ";
     }).length;
 
-    // Cập nhật trang chủ
-
     document.getElementById("totalRooms").textContent = tongPhong;
     document.getElementById("usedRooms").textContent = phongDangDung;
     document.getElementById("emptyRooms").textContent = phongTrong;
     document.getElementById("pendingRequests").textContent = yeuCauCho;
 
-    // Cập nhật báo cáo
 
     document.getElementById("reportTotal").textContent = tongPhong;
     document.getElementById("reportUsed").textContent = phongDangDung;
@@ -932,10 +874,7 @@ function xuLyInBaoCao() {
     });
 }
 
-
-// ==========================================
 // PHẦN CHUNG: TÌM KIẾM DỮ LIỆU
-// ==========================================
 
 function xuLyTimKiem() {
     var searchInput = document.getElementById("searchInput");
@@ -961,41 +900,18 @@ function xuLyTimKiem() {
     });
 }
 
-
-// ==========================================
 // PHẦN CHUNG: KHỞI CHẠY WEBSITE
-// ==========================================
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    // Khởi tạo dữ liệu trước khi đăng nhập
-
     khoiTaoDuLieu();
-
-    // Thành viên 1: đăng nhập và đăng xuất
-
     xuLyDangNhap();
     xuLyDangXuat();
     xuLyChuyenTrang();
-
-    // Thành viên 2: quản lý phòng học
-
     xuLyThemPhong();
-
-    // Thành viên 3: đặt phòng
-
     xuLyDatPhong();
-
-    // Thành viên 1: quản lý người dùng
-
     xuLyThemNguoiDung();
-
-    // Thành viên 5: báo cáo
-
     xuLyInBaoCao();
-
-    // Phần chung: tìm kiếm
-
     xuLyTimKiem();
 
 });
