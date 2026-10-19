@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý phòng học</title>
+    <link rel="stylesheet" href="dangnhap.css">
+</head>
+
+<body>
+
+<div id="loginPage" class="login-page">
+    <form id="loginForm" class="login-box">
+
+        <h2>QUẢN LÝ PHÒNG HỌC</h2>
+        <p>Đăng nhập hệ thống</p>
+        <label for="username">Tên đăng nhập</label>
+        <input type="text" id="username"
+               placeholder="Nhập tên đăng nhập" required>
+        <label for="password">Mật khẩu</label>
+        <input type="password" id="password"
+               placeholder="Nhập mật khẩu" required>
+        <button type="submit">Đăng nhập</button>
+
+        <p id="loginMessage"></p>
+
+        <div class="demo-account">
+            Tài khoản: admin<br>
+            Mật khẩu: 123456
+        </div>
+    </form>
+</div>
+
+
+<div id="app" class="hidden">
+
+    <div class="sidebar">
+        <h2>QUẢN LÝ<br>PHÒNG HỌC</h2>
+        <a href="#" class="menu-link active" data-page="home">
+            Trang chủ
+        </a>
+        <a href="#" class="menu-link" data-page="rooms">
+            Quản lý phòng học
+        </a>
+        <a href="#" class="menu-link" data-page="calendar">
+            Lịch học
+        </a>
+        <a href="#" class="menu-link" data-page="booking">
+            Đặt phòng
+        </a>
+        <a href="#" class="menu-link" data-page="requests">
+            Yêu cầu đặt phòng
+        </a>
+        <a href="#" class="menu-link" data-page="users">
+            Người dùng
+        </a>
+        <a href="#" class="menu-link" data-page="reports">
+            Báo cáo
+        </a>
+        <button id="logoutBtn" class="logout-btn">
+            Đăng xuất
+        </button>
+
+    </div>
+
+    <div class="main">
+        <div class="header">
+            <input type="text" id="searchInput"
+                   placeholder="Tìm kiếm dữ liệu...">
+            <span id="currentUser">Quản trị viên</span>
+        </div>
+
+        <div class="content">
+            <section id="home" class="page">
+                <h2>Trang chủ</h2>
+                <p>Chào mừng đến với hệ thống quản lý phòng học.</p>
+            </section>
+            <section id="rooms" class="page hidden">
+                <h2>Quản lý phòng học</h2>
+                <p>Khu vực quản lý phòng học.</p>
+            </section>
+
+            <section id="calendar" class="page hidden">
+                <h2>Lịch học</h2>
+                <p>Khu vực lịch học.</p>
+            </section>
+            <section id="booking" class="page hidden">
+                <h2>Đặt phòng</h2>
+                <p>Khu vực đặt phòng.</p>
+            </section>
+            <section id="requests" class="page hidden">
+                <h2>Yêu cầu đặt phòng</h2>
+                <p>Khu vực xử lý yêu cầu đặt phòng.</p>
+            </section>
+            <section id="users" class="page hidden">
+
+                <h2>Quản lý người dùng</h2>
+
+                <form id="userForm">
+
+                    <input type="hidden" id="userId">
+
+                    <div class="form-group">
+                        <label for="userUsername">Tên đăng nhập</label>
+                        <input type="text" id="userUsername"
+                               required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="userFullName">Họ và tên</label>
+                        <input type="text" id="userFullName"
+                               required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="userPassword">Mật khẩu</label>
+                        <input type="password" id="userPassword"
+                               placeholder="Nhập mật khẩu">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="userEmail">Email</label>
+                        <input type="email" id="userEmail">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="userRole">Vai trò</label>
+                        <select id="userRole">
+                            <option value="Quản trị viên">
+                                Quản trị viên
+                            </option>
+                            <option value="Nhân viên">
+                                Nhân viên
+                            </option>
+                        </select>
+                    </div>
+
+                    <button type="submit" id="saveUserBtn">
+                        Thêm người dùng
+                    </button>
+
+                    <button type="button" id="cancelUserBtn">
+                        Làm mới
+                    </button>
+
+                </form>
+
+                <h3>Danh sách người dùng</h3>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên đăng nhập</th>
+                                <th>Họ và tên</th>
+                                <th>Email</th>
+                                <th>Vai trò</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="userTable"></tbody>
+                    </table>
+                </div>
+
+            </section>
+
+            <!-- BÁO CÁO -->
+
+            <section id="reports" class="page hidden">
+                <h2>Báo cáo</h2>
+                <p>Khu vực báo cáo.</p>
+            </section>
+
+        </div>
+
+    </div>
+
+</div>
+<script src="script.js"></script>
+</body>
+</html>

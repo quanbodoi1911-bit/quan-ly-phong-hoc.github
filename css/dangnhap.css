@@ -1,0 +1,137 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f3f6fb;
+    color: #243247;
+    font-size: 14px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background: #2878e8;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #1c5fbd;
+}
+
+input,
+select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: Arial, sans-serif;
+}
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: #17365d;
+}
+
+.login-box {
+    width: 360px;
+    max-width: 100%;
+    padding: 30px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px #102744;
+}
+
+.login-box h2 {
+    color: #17365d;
+    text-align: center;
+    font-size: 21px;
+}
+
+.login-box > p {
+    text-align: center;
+}
+
+.login-box label {
+    display: block;
+    margin-top: 15px;
+}
+
+.login-box input {
+    width: 100%;
+    padding: 11px;
+    margin-top: 7px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#loginMessage {
+    color: red;
+}
+
+.demo-account {
+    margin-top: 15px;
+    padding: 10px;
+    text-align: center;
+    background: #f3f6fb;
+    border-radius: 5px;
+    line-height: 1.8;
+}
+
+
+/* ==========================================
+   THÀNH VIÊN 1(Quân): SIDEBAR VÀ ĐIỀU HƯỚNG
+   ========================================== */
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 230px;
+    height: 100vh;
+    padding: 15px;
+    overflow-y: auto;
+    background: #17365d;
+    color: white;
+}
+
+.sidebar h2 {
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 19px;
+    line-height: 1.5;
+}
+
+.sidebar a {
+    display: block;
+    padding: 13px 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+    background: #2878e8;
+}
+
+.logout-btn {
+    width: 100%;
+    margin-top: 25px;
+    background: #dc3545;
+}
+
+.logout-btn:hover {
+    background: #b52a37;
+}
