@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý phòng học</title>
+
+    <link rel="stylesheet" href="quan-li-phong-hoc.css">
+    <script src="quan-li-phong-hoc.js" defer></script>
+</head>
+<body>
+
+    <!-- Khu vực quản lý phòng học -->
+    <div id="rooms" class="page">
+
+        <h1>Quản lý phòng học</h1>
+
+        <!-- Nút mở form thêm phòng -->
+        <button type="button" id="addRoomBtn">
+            + Thêm phòng
+        </button>
+
+        <!-- Form thêm và sửa phòng -->
+        <form id="roomForm" class="content-form hidden">
+
+            <h3 id="roomFormTitle">Thêm phòng học</h3>
+
+            <!-- Lưu ID của phòng khi sửa -->
+            <input type="hidden" id="roomId">
+
+            <label for="roomCode">Mã phòng</label>
+            <input type="text" id="roomCode"
+                   placeholder="Ví dụ: P101" required>
+
+            <label for="roomName">Tên phòng</label>
+            <input type="text" id="roomName"
+                   placeholder="Ví dụ: Phòng học 101" required>
+
+            <label for="roomBuilding">Tòa nhà</label>
+            <input type="text" id="roomBuilding"
+                   placeholder="Ví dụ: Tòa A" required>
+
+            <label for="roomCapacity">Sức chứa</label>
+            <input type="number" id="roomCapacity"
+                   placeholder="Nhập sức chứa"
+                   min="1" step="1" required>
+
+            <label for="roomStatus">Trạng thái</label>
+            <select id="roomStatus" required>
+                <option value="Trống">Trống</option>
+                <option value="Đang sử dụng">Đang sử dụng</option>
+                <option value="Bảo trì">Bảo trì</option>
+            </select>
+
+            <!-- Nút lưu -->
+            <button type="submit" id="saveRoomBtn">
+                Thêm phòng
+            </button>
+
+            <!-- Nút hủy -->
+            <button type="button" id="cancelRoomBtn"
+                    class="cancel-btn">
+                Hủy
+            </button>
+
+        </form>
+
+        <!-- Bảng danh sách phòng học -->
+        <div class="table-container">
+
+            <table id="roomTable">
+                <thead>
+                    <tr>
+                        <th>Mã phòng</th>
+                        <th>Tên phòng</th>
+                        <th>Tòa nhà</th>
+                        <th>Sức chứa</th>
+                        <th>Trạng thái</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <!-- JavaScript thêm dữ liệu vào đây -->
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
