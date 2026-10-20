@@ -1,0 +1,130 @@
+/* Lượng: GIAO DIỆN TRANG CHỦ VÀ BÁO CÁO
+   - Khi tách file: gắn file này vào trang-chu.html và bao-cao.html.
+   - Khi ghép vào style.css gốc: KHÔNG cần dán, vì style.css đã có sẵn các luật này. */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background: #f3f6fb;
+    color: #243247;
+    font-size: 14px;
+}
+
+.page {
+    min-height: 300px;
+    padding: 25px;
+    background: white;
+    border-radius: 8px;
+}
+
+.page h1 {
+    margin-top: 0;
+    color: #17365d;
+}
+
+/* Thẻ thống kê */
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 15px;
+    margin: 25px 0;
+}
+
+.card {
+    padding: 20px;
+    background: #f8faff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px #ddd;
+}
+
+.card p {
+    color: #68758a;
+}
+
+.card h2 {
+    margin-bottom: 0;
+    color: #2878e8;
+    font-size: 28px;
+}
+
+.welcome-box {
+    margin-top: 25px;
+    padding: 20px;
+    background: #f8faff;
+    border-left: 4px solid #2878e8;
+    border-radius: 5px;
+}
+
+/* Báo cáo */
+
+#reports .card {
+    border-top: 3px solid #2878e8;
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    background: white;
+}
+
+th,
+td {
+    padding: 13px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background: #f3f6fb;
+    color: #17365d;
+}
+
+tbody tr:hover {
+    background: #f8faff;
+}
+
+button {
+    padding: 10px 14px;
+    margin: 3px;
+    border: none;
+    border-radius: 5px;
+    background: #2878e8;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #165bb5;
+}
+
+/* Màn hình nhỏ */
+
+@media (max-width: 900px) {
+    .cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* In báo cáo: ẩn nút in */
+
+@media print {
+    #printReportBtn {
+        display: none !important;
+    }
+
+    body {
+        padding: 0;
+    }
+}
