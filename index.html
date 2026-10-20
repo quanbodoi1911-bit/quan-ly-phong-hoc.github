@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý phòng học</title>
+
+    <!-- Liên kết CSS do cả nhóm sử dụng -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ====================================== -->
+    <!-- THÀNH VIÊN 1(Quân): GIAO DIỆN ĐĂNG NHẬP -->
+    <!-- ====================================== -->
+
+    <div id="loginPage" class="login-page">
+
+        <form id="loginForm" class="login-box">
+
+            <h2>QUẢN LÝ PHÒNG HỌC</h2>
+            <p>Đăng nhập hệ thống</p>
+
+            <label>Tên đăng nhập</label>
+            <input type="text" id="username"
+                   placeholder="Nhập tên đăng nhập" required>
+
+            <label>Mật khẩu</label>
+            <input type="password" id="password"
+                   placeholder="Nhập mật khẩu" required>
+
+            <button type="submit">Đăng nhập</button>
+
+            <p id="loginMessage"></p>
+
+            <div class="demo-account">
+                Tài khoản: admin<br>
+                Mật khẩu: 123456
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- ====================================== -->
+    <!-- THÀNH VIÊN 1(Quân): SIDEBAR VÀ CHUYỂN TRANG -->
+    <!-- ====================================== -->
+
+    <div id="app" class="hidden">
+
+        <div class="sidebar">
+
+            <h2>QUẢN LÝ<br>PHÒNG HỌC</h2>
+
+            <a href="#" class="menu-link active" data-page="home">
+                Trang chủ
+            </a>
+
+            <a href="#" class="menu-link" data-page="rooms">
+                Quản lý phòng học
+            </a>
+
+            <a href="#" class="menu-link" data-page="calendar">
+                Lịch học
+            </a>
+
+            <a href="#" class="menu-link" data-page="booking">
+                Đặt phòng
+            </a>
+
+            <a href="#" class="menu-link" data-page="requests">
+                Yêu cầu đặt phòng
+            </a>
+
+            <a href="#" class="menu-link" data-page="users">
+                Người dùng
+            </a>
+
+            <a href="#" class="menu-link" data-page="reports">
+                Báo cáo
+            </a>
+
+            <button id="logoutBtn" class="logout-btn">
+                Đăng xuất
+            </button>
+
+        </div>
+
+
+        <!-- KHU VỰC NỘI DUNG CHÍNH -->
+
+        <div class="main">
+
+            <!-- THÀNH VIÊN 1: THANH TÌM KIẾM VÀ THÔNG TIN NGƯỜI DÙNG -->
+
+            <div class="header">
+
+                <input type="text" id="searchInput"
+                       placeholder="Tìm kiếm dữ liệu...">
+
+                <span id="currentUser">Quản trị viên</span>
+
+            </div>
+
+
+            <!-- ====================================== -->
+            <!-- THÀNH VIÊN 5(Đặng Long): TRANG CHỦ VÀ THỐNG KÊ -->
+            <!-- ====================================== -->
+
+            <div id="home" class="page">
+
+                <h1>Trang chủ</h1>
+
+                <p>Chào mừng đến với hệ thống quản lý phòng học.</p>
+
+                <div class="cards">
+
+                    <div class="card">
+                        <p>Tổng số phòng</p>
+                        <h2 id="totalRooms">0</h2>
+                    </div>
+
+                    <div class="card">
+                        <p>Phòng đang sử dụng</p>
+                        <h2 id="usedRooms">0</h2>
+                    </div>
+
+                    <div class="card">
+                        <p>Phòng trống</p>
+                        <h2 id="emptyRooms">0</h2>
+                    </div>
+
+                    <div class="card">
+                        <p>Yêu cầu chờ duyệt</p>
+                        <h2 id="pendingRequests">0</h2>
+                    </div>
+
+                </div>
+
+                <div class="welcome-box">
+                    <h3>Thông tin hệ thống</h3>
+
+                    <p>
+                        Website hỗ trợ quản lý phòng học, đặt phòng,
+                        lịch học và yêu cầu sử dụng phòng.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- ====================================== -->
+            <!-- Thành viên 2(Lượng): QUẢN LÝ PHÒNG HỌC -->
+            <!-- ====================================== -->
+
+            <div id="rooms" class="page hidden">
+
+                <h1>Quản lý phòng học</h1>
+
+                <button type="button" id="addRoomBtn">
+                    + Thêm phòng
+                </button>
+
+                <!-- Form thêm và sửa phòng -->
+
+                <form id="roomForm" class="content-form hidden">
+
+                    <h3 id="roomFormTitle">Thêm phòng học</h3>
+
+                    <input type="hidden" id="roomId">
+
+                    <label>Mã phòng</label>
+                    <input type="text" id="roomCode"
+                           placeholder="Ví dụ: A103" required>
+
+                    <label>Tên phòng</label>
+                    <input type="text" id="roomName"
+                           placeholder="Nhập tên phòng" required>
+
+                    <label>Tòa nhà</label>
+                    <input type="text" id="roomBuilding"
+                           placeholder="Nhập tên tòa nhà" required>
+
+                    <label>Sức chứa</label>
+                    <input type="number" id="roomCapacity"
+                           min="1" required>
+
+                    <label>Trạng thái</label>
+                    <select id="roomStatus">
+                        <option value="Trống">Trống</option>
+                        <option value="Đang sử dụng">Đang sử dụng</option>
+                    </select>
+
+                    <button type="submit" id="saveRoomBtn">
+                        Thêm phòng
+                    </button>
+
+                    <button type="button" id="cancelRoomBtn"
+                            class="cancel-btn">
+                        Hủy
+                    </button>
+
+                </form>
+
+                <!-- Bảng danh sách phòng -->
+
+                <div class="table-container">
+
+                    <table id="roomTable">
+
+                        <thead>
+                            <tr>
+                                <th>Mã phòng</th>
+                                <th>Tên phòng</th>
+                                <th>Tòa nhà</th>
+                                <th>Sức chứa</th>
+                                <th>Trạng thái</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+
+                        <tbody></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <!-- ====================================== -->
+            <!-- THÀNH VIÊN 3(Duy Linh): ĐẶT PHÒNG -->
+            <!-- ====================================== -->
+
+            <div id="booking" class="page hidden">
+
+                <h1>Đặt phòng học</h1>
+
+                <form id="bookingForm" class="content-form">
+
+                    <label>Chọn phòng</label>
+                    <select id="roomSelect" required></select>
+
+                    <label>Ngày sử dụng</label>
+                    <input type="date" id="bookingDate" required>
+
+                    <label>Thời gian bắt đầu</label>
+                    <input type="time" id="startTime" required>
+
+                    <label>Thời gian kết thúc</label>
+                    <input type="time" id="endTime" required>
+
+                    <label>Mục đích sử dụng</label>
+                    <textarea id="purpose"
+                              placeholder="Nhập mục đích sử dụng"
+                              required></textarea>
+
+                    <button type="submit">Gửi yêu cầu đặt phòng</button>
+
+                </form>
+
+            </div>
+
+
+            <!-- ====================================== -->
+            <!-- THÀNH VIÊN 3(Duy Linh): LỊCH HỌC -->
+            <!-- ====================================== -->
+
+            <div id="calendar" class="page hidden">
+
+                <h1>Lịch học</h1>
+
+                <div class="table-container">
+
+                    <table id="calendarTable">
+
+                        <thead>
+                            <tr>
+                                <th>Ngày học</th>
+                                <th>Phòng</th>
+                                <th>Thời gian bắt đầu</th>
+                                <th>Thời gian kết thúc</th>
+                                <th>Nội dung</th>
+                            </tr>
+                        </thead>
+
+                        <tbody></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <!-- ====================================== -->
+            <!-- THÀNH VIÊN 4(Công Long): YÊU CẦU ĐẶT PHÒNG -->
+            <!-- ====================================== -->
+
+            <div id="requests" class="page hidden">
+
+                <h1>Yêu cầu đặt phòng</h1>
+
+                <div class="table-container">
+
+                    <table id="requestTable">
+
+                        <thead>
+                            <tr>
+                                <th>Người đặt</th>
+                                <th>Phòng</th>
+                                <th>Ngày và giờ</th>
+                                <th>Mục đích</th>
+                                <th>Trạng thái</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+
+                        <tbody></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <!-- ====================================== -->
+            <!-- THÀNH VIÊN 4(Công Long): QUẢN LÝ NGƯỜI DÙNG -->
+            <!-- ====================================== -->
+
+            <div id="users" class="page hidden">
+
+                <h1>Quản lý người dùng</h1>
+
+                <button type="button" id="addUserBtn">
+                    + Thêm người dùng
+                </button>
+
+                <form id="userForm" class="content-form hidden">
+
+                    <h3>Thêm người dùng</h3>
+
+                    <label>Tên đăng nhập</label>
+                    <input type="text" id="newUsername" required>
+
+                    <label>Họ tên</label>
+                    <input type="text" id="newFullName" required>
+
+                    <label>Email</label>
+                    <input type="email" id="newEmail" required>
+
+                    <label>Vai trò</label>
+                    <select id="newRole">
+                        <option value="Người dùng">Người dùng</option>
+                        <option value="Quản trị viên">Quản trị viên</option>
+                    </select>
+
+                    <label>Mật khẩu</label>
+                    <input type="password" id="newPassword"
+                           minlength="6" required>
+
+                    <button type="submit">Thêm người dùng</button>
+
+                    <button type="button" id="cancelUserBtn"
+                            class="cancel-btn">
+                        Hủy
+                    </button>
+
+                </form>
+
+                <div class="table-container">
+
+                    <table id="userTable">
+
+                        <thead>
+                            <tr>
+                                <th>Mã người dùng</th>
+                                <th>Họ tên</th>
+                                <th>Email</th>
+                                <th>Vai trò</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+
+                        <tbody></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <!-- ====================================== -->
+            <!-- THÀNH VIÊN 5(Đặng Long): BÁO CÁO VÀ THỐNG KÊ -->
+            <!-- ====================================== -->
+
+            <div id="reports" class="page hidden">
+
+                <h1>Báo cáo thống kê</h1>
+
+                <div class="cards">
+
+                    <div class="card">
+                        <p>Tổng số phòng</p>
+                        <h2 id="reportTotal">0</h2>
+                    </div>
+
+                    <div class="card">
+                        <p>Phòng đang sử dụng</p>
+                        <h2 id="reportUsed">0</h2>
+                    </div>
+
+                    <div class="card">
+                        <p>Phòng trống</p>
+                        <h2 id="reportEmpty">0</h2>
+                    </div>
+
+                    <div class="card">
+                        <p>Yêu cầu chờ duyệt</p>
+                        <h2 id="reportPending">0</h2>
+                    </div>
+
+                </div>
+
+                <button type="button" id="printReportBtn">
+                    In báo cáo
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Liên kết JavaScript -->
+    <script src="script.js"></script>
+
+</body>
+</html>
+
