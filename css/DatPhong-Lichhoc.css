@@ -13,9 +13,9 @@ body {
     font-size: 14px;
 }
 
-/* ==========================================
-   THÀNH VIÊN 1: SIDEBAR VÀ ĐIỀU HƯỚNG
-   ========================================== */
+
+  /*  SIDEBAR VÀ ĐIỀU HƯỚNG */
+  
 .sidebar {
     position: fixed;
     top: 0;
@@ -64,9 +64,8 @@ body {
     background: #b52a37;
 }
 
-/* ==========================================
-   PHẦN CHUNG: KHU VỰC NỘI DUNG
-   ========================================== */
+ /*  KHU VỰC NỘI DUNG*/
+    
 .main {
     min-height: 100vh;
     margin-left: 230px;
@@ -107,10 +106,8 @@ body {
     margin-top: 0;
     color: #17365d;
 }
-
-/* ==========================================
-   THÀNH VIÊN 3: GIAO DIỆN ĐẶT PHÒNG
-   ========================================== */
+   /* GIAO DIỆN ĐẶT PHÒNG */
+   
 .content-form {
     max-width: 550px;
     margin: 20px 0;
@@ -155,9 +152,7 @@ body {
     background: #165bb5;
 }
 
-/* ==========================================
-   GIAO DIỆN ĐIỆN THOẠI & MÁY TÍNH BẢNG
-   ========================================== */
+ /*  GIAO DIỆN ĐIỆN THOẠI & MÁY TÍNH BẢNG*/ 
 @media (max-width: 1000px) {
     .page {
         padding: 18px;

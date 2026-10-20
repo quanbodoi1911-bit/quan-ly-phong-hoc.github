@@ -1,6 +1,4 @@
-// ==========================================
-// DỮ LIỆU TẠM THỜI (MÔ PHỎNG DATABASE)
-// ==========================================
+
 var rooms = [
     { id: 1, code: "A101", name: "Phòng học A101", building: "Tòa A", capacity: 40, status: "Trống" },
     { id: 2, code: "A102", name: "Phòng học A102", building: "Tòa A", capacity: 50, status: "Trống" }
@@ -9,9 +7,8 @@ var requests = [];
 var calendar = [];
 var currentUser = { id: 2, username: "user1", fullName: "Người dùng 1", role: "Người dùng" };
 
-// ==========================================
-// THÀNH VIÊN 1: SIDEBAR VÀ CHUYỂN TRANG
-// ==========================================
+//  SIDEBAR VÀ CHUYỂN TRANG
+
 function xuLyChuyenTrang() {
     var links = document.querySelectorAll(".menu-link");
 
@@ -36,9 +33,9 @@ function xuLyDangXuat() {
     }
 }
 
-// ==========================================
-// THÀNH VIÊN 3: DANH SÁCH PHÒNG ĐẶT
-// ==========================================
+
+//  DANH SÁCH PHÒNG ĐẶT
+
 function capNhatDanhSachPhong() {
     var roomSelect = document.getElementById("roomSelect");
 
@@ -68,9 +65,9 @@ function capNhatDanhSachPhong() {
     }
 }
 
-// ==========================================
-// THÀNH VIÊN 3: XỬ LÝ ĐẶT PHÒNG
-// ==========================================
+
+// XỬ LÝ ĐẶT PHÒNG
+
 function layNgayHienTai() {
     var ngay = new Date();
     var nam = ngay.getFullYear();
@@ -164,9 +161,7 @@ function xuLyDatPhong() {
     });
 }
 
-// ==========================================
 // KHỞI CHẠY KHI TẢI TRANG
-// ==========================================
 document.addEventListener("DOMContentLoaded", function () {
     // Cập nhật tên người dùng hiển thị
     if (currentUser) {

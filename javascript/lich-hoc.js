@@ -1,6 +1,5 @@
-// ==========================================
-// DỮ LIỆU TẠM THỜI MÔ PHỎNG CHO TRANG LỊCH HỌC
-// ==========================================
+
+/* DỮ LIỆU TẠM THỜI MÔ PHỎNG CHO TRANG LỊCH HỌC*/
 var rooms = [
     { id: 1, code: "A101" },
     { id: 2, code: "A102" }
@@ -12,9 +11,8 @@ var calendar = [
     { id: 3, roomId: 1, date: "2026-10-22", startTime: "13:00", endTime: "15:00", purpose: "Học môn Cơ sở dữ liệu" }
 ];
 
-// ==========================================
+
 // HÀM HIỂN THỊ LỊCH HỌC VÀO BẢNG
-// ==========================================
 function hienThiLich() {
     var tbody = document.querySelector("#calendarTable tbody");
     if (!tbody) return;
@@ -48,9 +46,8 @@ function hienThiLich() {
     });
 }
 
-// ==========================================
+
 // KHỞI CHẠY KHI TẢI TRANG
-// ==========================================
 document.addEventListener("DOMContentLoaded", function () {
     hienThiLich();
 });
