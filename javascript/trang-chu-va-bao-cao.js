@@ -1,4 +1,4 @@
-// Lượng: THỐNG KÊ TRANG CHỦ VÀ BÁO CÁO
+// : THỐNG KÊ TRANG CHỦ VÀ BÁO CÁO
 //
 // Cách dùng:
 // - Trong script.js: xóa 2 hàm capNhatThongKe() và xuLyInBaoCao() cũ,
