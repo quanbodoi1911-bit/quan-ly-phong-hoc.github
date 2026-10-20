@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo cáo thống kê</title>
+
+    <link rel="stylesheet" href="trang-chu-va-bao-cao.css">
+</head>
+
+<body>
+
+    <!-- Lượng: BÁO CÁO VÀ THỐNG KÊ -->
+
+    <div id="reports" class="page">
+
+        <h1>Báo cáo thống kê</h1>
+
+        <p>Ngày lập báo cáo: <span id="reportDate"></span></p>
+
+        <div class="cards">
+
+            <div class="card">
+                <p>Tổng số phòng</p>
+                <h2 id="reportTotal">0</h2>
+            </div>
+
+            <div class="card">
+                <p>Phòng đang sử dụng</p>
+                <h2 id="reportUsed">0</h2>
+            </div>
+
+            <div class="card">
+                <p>Phòng trống</p>
+                <h2 id="reportEmpty">0</h2>
+            </div>
+
+            <div class="card">
+                <p>Yêu cầu chờ duyệt</p>
+                <h2 id="reportPending">0</h2>
+            </div>
+
+        </div>
+
+        <h3>Thống kê chi tiết</h3>
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Chỉ số</th>
+                        <th>Số lượng</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Phòng đang bảo trì</td>
+                        <td id="reportMaintenance">0</td>
+                    </tr>
+                    <tr>
+                        <td>Tổng số yêu cầu đặt phòng</td>
+                        <td id="reportRequests">0</td>
+                    </tr>
+                    <tr>
+                        <td>Yêu cầu đã duyệt</td>
+                        <td id="reportApproved">0</td>
+                    </tr>
+                    <tr>
+                        <td>Yêu cầu bị từ chối</td>
+                        <td id="reportRejected">0</td>
+                    </tr>
+                    <tr>
+                        <td>Số buổi đã có lịch</td>
+                        <td id="reportCalendar">0</td>
+                    </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <button type="button" id="printReportBtn" style="margin-top: 15px;">
+            In báo cáo
+        </button>
+
+    </div>
+
+    <script src="trang-chu-va-bao-cao.js"></script>
+
+</body>
+</html>
