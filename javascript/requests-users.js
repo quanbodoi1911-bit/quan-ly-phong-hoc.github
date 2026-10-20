@@ -1,407 +1,188 @@
-// ==========================================
-// DỮ LIỆU ĐỒNG BỘ LOCALSTORAGE
-// ==========================================
 
-var rooms = [];
-var requests = [];
-var calendar = [];
-var users = [];
-var currentUser = null;
+var requests = JSON.parse(localStorage.getItem("requests")) || [];
+var users = JSON.parse(localStorage.getItem("users")) || [];
+var rooms = JSON.parse(localStorage.getItem("rooms")) || [];
+var calendar = JSON.parse(localStorage.getItem("calendar")) || [];
 
-function docDuLieu(key, macDinh) {
-    try {
-        var data = localStorage.getItem(key);
-
-        if (data) {
-            var ketQua = JSON.parse(data);
-
-            if (Array.isArray(ketQua)) {
-                return ketQua;
-            }
-        }
-    } catch (error) {
-        console.error("Lỗi đọc dữ liệu:", key, error);
-    }
-
-    return macDinh;
-}
-
-function luuDuLieu() {
-    localStorage.setItem("rooms", JSON.stringify(rooms));
-    localStorage.setItem("requests", JSON.stringify(requests));
-    localStorage.setItem("calendar", JSON.stringify(calendar));
+if (!users.some(function (u) { return u.username === "admin"; })) {
+    users.push({ id: 1, username: "admin", password: "123456", fullName: "Quản trị viên", email: "admin@example.com", role: "Quản trị viên" });
     localStorage.setItem("users", JSON.stringify(users));
 }
 
-function capNhatThongKe() {
-    var tongPhong = rooms.length;
-
-    var phongDangDung = rooms.filter(function (room) {
-        return room.status === "Đang sử dụng";
-    }).length;
-
-    var phongTrong = rooms.filter(function (room) {
-        return room.status === "Trống";
-    }).length;
-
-    var yeuCauCho = requests.filter(function (request) {
-        return request.status === "Đang chờ";
-    }).length;
-
-    var elTotal = document.getElementById("totalRooms");
-    if (elTotal) elTotal.textContent = tongPhong;
-    var elUsed = document.getElementById("usedRooms");
-    if (elUsed) elUsed.textContent = phongDangDung;
-    var elEmpty = document.getElementById("emptyRooms");
-    if (elEmpty) elEmpty.textContent = phongTrong;
-    var elPending = document.getElementById("pendingRequests");
-    if (elPending) elPending.textContent = yeuCauCho;
+function luu() {
+    localStorage.setItem("requests", JSON.stringify(requests));
+    localStorage.setItem("users", JSON.stringify(users));
+    localStorage.setItem("calendar", JSON.stringify(calendar));
 }
-
-// ==========================================
-// ĐIỀU HƯỚNG VÀ CHUYỂN TRANG (SIDEBAR)
-// ==========================================
 
 function hienThiTrang(pageId) {
-    var pages = document.querySelectorAll(".page");
-    var links = document.querySelectorAll(".menu-link");
+    document.querySelectorAll(".page").forEach(function (p) { p.classList.add("hidden"); });
+    document.querySelectorAll(".menu-link").forEach(function (l) { l.classList.remove("active"); });
 
-    pages.forEach(function (page) {
-        page.classList.add("hidden");
-    });
+    var targetPage = document.getElementById(pageId);
+    var targetLink = document.querySelector('.menu-link[data-page="' + pageId + '"]');
+    if (targetPage) targetPage.classList.remove("hidden");
+    if (targetLink) targetLink.classList.add("active");
 
-    var pageCanHien = document.getElementById(pageId);
-
-    if (pageCanHien) {
-        pageCanHien.classList.remove("hidden");
-    }
-
-    links.forEach(function (link) {
-        link.classList.remove("active");
-
-        if (link.getAttribute("data-page") === pageId) {
-            link.classList.add("active");
-        }
-    });
-
-    if (pageId === "requests") {
-        hienThiYeuCau();
-    }
-
-    if (pageId === "users") {
-        hienThiNguoiDung();
-    }
+    if (pageId === "requests") hienThiYeuCau();
+    if (pageId === "users") hienThiNguoiDung();
 }
 
-function xuLyChuyenTrang() {
-    var links = document.querySelectorAll(".menu-link");
-
-    links.forEach(function (link) {
-        link.addEventListener("click", function (event) {
-            event.preventDefault();
-
-            var pageId = link.getAttribute("data-page");
-
-            hienThiTrang(pageId);
-        });
-    });
-}
-
-// ==========================================
-// THÀNH VIÊN 4: HIỂN THỊ YÊU CẦU ĐẶT PHÒNG
-// ==========================================
 
 function hienThiYeuCau() {
     var tbody = document.querySelector("#requestTable tbody");
-
     if (!tbody) return;
-
     tbody.innerHTML = "";
 
-    requests.forEach(function (request) {
-        var room = rooms.find(function (item) {
-            return item.id === request.roomId;
-        });
-
+    requests.forEach(function (req) {
+        var room = rooms.find(function (r) { return r.id === req.roomId; });
         var row = tbody.insertRow();
 
-        row.insertCell().textContent = request.fullName;
+        row.insertCell().textContent = req.fullName;
         row.insertCell().textContent = room ? room.code : "Đã xóa phòng";
-
-        row.insertCell().textContent =
-            request.date + " " + request.startTime +
-            " - " + request.endTime;
-
-        row.insertCell().textContent = request.purpose;
+        row.insertCell().textContent = req.date + " " + req.startTime + " - " + req.endTime;
+        row.insertCell().textContent = req.purpose;
 
         var statusCell = row.insertCell();
-        statusCell.textContent = request.status;
-
-        if (request.status === "Đang chờ") {
-            statusCell.className = "status-pending";
-        } else if (request.status === "Đã duyệt") {
-            statusCell.className = "status-approved";
-        } else {
-            statusCell.className = "status-rejected";
-        }
+        statusCell.textContent = req.status;
+        statusCell.className = req.status === "Đang chờ" ? "status-pending" : (req.status === "Đã duyệt" ? "status-approved" : "status-rejected");
 
         var actionCell = row.insertCell();
+        if (req.status === "Đang chờ") {
+            var btnDuyet = document.createElement("button");
+            btnDuyet.textContent = "Duyệt";
+            btnDuyet.className = "approve-btn";
+            btnDuyet.onclick = function () { duyetYeuCau(req.id); };
 
-        if (request.status === "Đang chờ") {
-            var duyetBtn = document.createElement("button");
-            duyetBtn.textContent = "Duyệt";
-            duyetBtn.className = "approve-btn";
+            var btnTuChoi = document.createElement("button");
+            btnTuChoi.textContent = "Từ chối";
+            btnTuChoi.className = "delete-btn";
+            btnTuChoi.onclick = function () { tuChoiYeuCau(req.id); };
 
-            duyetBtn.addEventListener("click", function () {
-                duyetYeuCau(request.id);
-            });
-
-            var tuChoiBtn = document.createElement("button");
-            tuChoiBtn.textContent = "Từ chối";
-            tuChoiBtn.className = "delete-btn";
-
-            tuChoiBtn.addEventListener("click", function () {
-                tuChoiYeuCau(request.id);
-            });
-
-            actionCell.appendChild(duyetBtn);
-            actionCell.appendChild(tuChoiBtn);
+            actionCell.appendChild(btnDuyet);
+            actionCell.appendChild(btnTuChoi);
         } else {
             actionCell.textContent = "Đã xử lý";
         }
     });
 }
 
-// ==========================================
-// THÀNH VIÊN 4: DUYỆT YÊU CẦU
-// ==========================================
-
 function duyetYeuCau(id) {
-    var request = requests.find(function (item) {
-        return item.id === id;
-    });
+    var req = requests.find(function (item) { return item.id === id; });
+    if (!req) return;
 
-    if (!request) return;
-
-    var biTrung = calendar.some(function (item) {
-        return item.roomId === request.roomId &&
-               item.date === request.date &&
-               request.startTime < item.endTime &&
-               request.endTime > item.startTime;
+    // Kiểm tra trùng lịch trước khi duyệt
+    var biTrung = calendar.some(function (c) {
+        return c.roomId === req.roomId && c.date === req.date && req.startTime < c.endTime && req.endTime > c.startTime;
     });
 
     if (biTrung) {
-        alert("Không thể duyệt vì lịch phòng bị trùng!");
+        alert("Không thể duyệt vì phòng này đã có lịch trùng thời gian!");
         return;
     }
 
-    request.status = "Đã duyệt";
-
-    var room = rooms.find(function (item) {
-        return item.id === request.roomId;
-    });
-
+    req.status = "Đã duyệt";
+    var room = rooms.find(function (r) { return r.id === req.roomId; });
     calendar.push({
-        id: request.id,
-        roomId: request.roomId,
-        roomCode: room ? room.code : "",
-        date: request.date,
-        startTime: request.startTime,
-        endTime: request.endTime,
-        purpose: request.purpose,
-        fullName: request.fullName
+        id: req.id, roomId: req.roomId, roomCode: room ? room.code : "",
+        date: req.date, startTime: req.startTime, endTime: req.endTime, purpose: req.purpose, fullName: req.fullName
     });
 
-    luuDuLieu();
+    luu();
     hienThiYeuCau();
-    capNhatThongKe();
-
     alert("Đã duyệt yêu cầu đặt phòng!");
 }
 
-// ==========================================
-// THÀNH VIÊN 4: TỪ CHỐI YÊU CẦU
-// ==========================================
-
 function tuChoiYeuCau(id) {
-    var request = requests.find(function (item) {
-        return item.id === id;
-    });
-
-    if (!request) return;
-
-    if (confirm("Bạn có chắc muốn từ chối yêu cầu này?")) {
-        request.status = "Đã từ chối";
-
-        luuDuLieu();
+    var req = requests.find(function (item) { return item.id === id; });
+    if (req && confirm("Bạn có chắc muốn từ chối yêu cầu này?")) {
+        req.status = "Đã từ chối";
+        luu();
         hienThiYeuCau();
-        capNhatThongKe();
-
         alert("Đã từ chối yêu cầu!");
     }
 }
 
-// ==========================================
-// THÀNH VIÊN 1: QUẢN LÝ NGƯỜI DÙNG
-// ==========================================
 
 function hienThiNguoiDung() {
     var tbody = document.querySelector("#userTable tbody");
-
     if (!tbody) return;
-
     tbody.innerHTML = "";
 
     users.forEach(function (user) {
         var row = tbody.insertRow();
-
         row.insertCell().textContent = user.id;
         row.insertCell().textContent = user.fullName;
         row.insertCell().textContent = user.email;
         row.insertCell().textContent = user.role;
 
         var actionCell = row.insertCell();
-
         if (user.username !== "admin") {
-            var xoaBtn = document.createElement("button");
-            xoaBtn.textContent = "Xóa";
-            xoaBtn.className = "delete-btn";
-
-            xoaBtn.addEventListener("click", function () {
-                xoaNguoiDung(user.id);
-            });
-
-            actionCell.appendChild(xoaBtn);
+            var btnXoa = document.createElement("button");
+            btnXoa.textContent = "Xóa";
+            btnXoa.className = "delete-btn";
+            btnXoa.onclick = function () { xoaNguoiDung(user.id); };
+            actionCell.appendChild(btnXoa);
         } else {
-            actionCell.textContent = "Tài khoản mặc định";
+            actionCell.textContent = "Mặc định";
         }
     });
 }
 
 function xuLyThemNguoiDung() {
-    var addUserBtn = document.getElementById("addUserBtn");
     var userForm = document.getElementById("userForm");
-    var cancelUserBtn = document.getElementById("cancelUserBtn");
+    document.getElementById("addUserBtn").onclick = function () { userForm.reset(); userForm.classList.remove("hidden"); };
+    document.getElementById("cancelUserBtn").onclick = function () { userForm.reset(); userForm.classList.add("hidden"); };
 
-    if (!addUserBtn || !userForm || !cancelUserBtn) return;
-
-    addUserBtn.addEventListener("click", function () {
-        userForm.reset();
-        userForm.classList.remove("hidden");
-    });
-
-    cancelUserBtn.addEventListener("click", function () {
-        userForm.reset();
-        userForm.classList.add("hidden");
-    });
-
-    userForm.addEventListener("submit", function (event) {
-        event.preventDefault();
-
+    userForm.onsubmit = function (e) {
+        e.preventDefault();
         var username = document.getElementById("newUsername").value.trim();
-        var fullName = document.getElementById("newFullName").value.trim();
-        var email = document.getElementById("newEmail").value.trim();
-        var role = document.getElementById("newRole").value;
         var password = document.getElementById("newPassword").value;
 
-        var trungTen = users.some(function (user) {
-            return user.username.toLowerCase() === username.toLowerCase();
-        });
-
-        if (trungTen) {
+        if (users.some(function (u) { return u.username.toLowerCase() === username.toLowerCase(); })) {
             alert("Tên đăng nhập đã tồn tại!");
             return;
         }
-
         if (password.length < 6) {
             alert("Mật khẩu phải có ít nhất 6 ký tự!");
             return;
         }
 
-        var newId = users.length > 0
-            ? Math.max.apply(null, users.map(function (user) {
-                return Number(user.id) || 0;
-            })) + 1
-            : 1;
-
         users.push({
-            id: newId,
+            id: users.length > 0 ? Math.max.apply(null, users.map(function (u) { return u.id || 0; })) + 1 : 1,
             username: username,
             password: password,
-            fullName: fullName,
-            email: email,
-            role: role
+            fullName: document.getElementById("newFullName").value.trim(),
+            email: document.getElementById("newEmail").value.trim(),
+            role: document.getElementById("newRole").value
         });
 
-        luuDuLieu();
+        luu();
         hienThiNguoiDung();
-
         userForm.reset();
         userForm.classList.add("hidden");
-
         alert("Thêm người dùng thành công!");
-    });
+    };
 }
 
 function xoaNguoiDung(id) {
-    var user = users.find(function (item) {
-        return item.id === id;
-    });
-
-    if (!user) return;
-
-    if (user.username === "admin") {
-        alert("Không thể xóa tài khoản admin!");
-        return;
-    }
-
-    if (currentUser && currentUser.id === id) {
-        alert("Không thể xóa tài khoản đang đăng nhập!");
-        return;
-    }
-
     if (confirm("Bạn có chắc muốn xóa người dùng này?")) {
-        users = users.filter(function (item) {
-            return item.id !== id;
-        });
-
-        luuDuLieu();
+        users = users.filter(function (u) { return u.id !== id; });
+        luu();
         hienThiNguoiDung();
-
         alert("Đã xóa người dùng!");
     }
 }
 
-// ==========================================
-// KHỞI CHẠY KHI MỞ TRANG
-// ==========================================
-
 document.addEventListener("DOMContentLoaded", function () {
-    // Đọc dữ liệu từ LocalStorage
-    rooms = docDuLieu("rooms", []);
-    requests = docDuLieu("requests", []);
-    calendar = docDuLieu("calendar", []);
-    users = docDuLieu("users", []);
+    // Đăng ký sự kiện click cho các nút Sidebar
+    document.querySelectorAll(".menu-link").forEach(function (link) {
+        link.onclick = function (e) {
+            e.preventDefault();
+            hienThiTrang(link.getAttribute("data-page"));
+        };
+    });
 
-    // Tạo tài khoản admin mặc định nếu chưa có
-    if (!users.some(function (user) { return user.username === "admin"; })) {
-        users.push({
-            id: 1,
-            username: "admin",
-            password: "123456",
-            fullName: "Quản trị viên",
-            email: "admin@example.com",
-            role: "Quản trị viên"
-        });
-        luuDuLieu();
-    }
-
-    // Đăng ký sự kiện chuyển trang bằng Sidebar
-    xuLyChuyenTrang();
-
-    // Khởi chạy giao diện trang đầu tiên (Yêu cầu đặt phòng)
     hienThiTrang("requests");
-    
-    // Kích hoạt form thêm người dùng
     xuLyThemNguoiDung();
 });
