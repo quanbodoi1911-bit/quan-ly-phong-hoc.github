@@ -20,7 +20,7 @@ body {
 
 
 /* ==========================================
-   THÀNH VIÊN 1: GIAO DIỆN ĐĂNG NHẬP
+   Quân: GIAO DIỆN ĐĂNG NHẬP
    ========================================== */
 
 .login-page {
@@ -29,7 +29,11 @@ body {
     justify-content: center;
     align-items: center;
     padding: 20px;
-    background: #17365d;
+
+    background-image: url("images/nen-dang-nhap.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .login-box {
@@ -79,7 +83,7 @@ body {
 
 
 /* ==========================================
-   THÀNH VIÊN 1: SIDEBAR VÀ ĐIỀU HƯỚNG
+   Quân: SIDEBAR VÀ ĐIỀU HƯỚNG
    ========================================== */
 
 .sidebar {
