@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yêu cầu đặt phòng & Quản lý người dùng</title>
+    <link rel="stylesheet" href="requests-users.css">
+</head>
+
+<body>
+
+    <div id="app">
+
+        <!-- ====================================== -->
+        <!-- SIDEBAR CHUYỂN TRANG -->
+        <!-- ====================================== -->
+
+        <div class="sidebar">
+
+            <h2>QUẢN LÝ<br>PHÒNG HỌC</h2>
+
+            <a href="#" class="menu-link active" data-page="requests">
+                Yêu cầu đặt phòng
+            </a>
+
+            <a href="#" class="menu-link" data-page="users">
+                Người dùng
+            </a>
+
+        </div>
+
+
+        <!-- KHU VỰC NỘI DUNG CHÍNH -->
+
+        <div class="main">
+
+            <!-- ====================================== -->
+            <!-- TRANG 1: YÊU CẦU ĐẶT PHÒNG -->
+            <!-- ====================================== -->
+
+            <div id="requests" class="page">
+
+                <h1>Yêu cầu đặt phòng</h1>
+
+                <div class="table-container">
+
+                    <table id="requestTable">
+
+                        <thead>
+                            <tr>
+                                <th>Người đặt</th>
+                                <th>Phòng</th>
+                                <th>Ngày và giờ</th>
+                                <th>Mục đích</th>
+                                <th>Trạng thái</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+
+                        <tbody></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <!-- ====================================== -->
+            <!-- TRANG 2: QUẢN LÝ NGƯỜI DÙNG -->
+            <!-- ====================================== -->
+
+            <div id="users" class="page hidden">
+
+                <h1>Quản lý người dùng</h1>
+
+                <button type="button" id="addUserBtn">
+                    + Thêm người dùng
+                </button>
+
+                <form id="userForm" class="content-form hidden">
+
+                    <h3>Thêm người dùng</h3>
+
+                    <label>Tên đăng nhập</label>
+                    <input type="text" id="newUsername" required>
+
+                    <label>Họ tên</label>
+                    <input type="text" id="newFullName" required>
+
+                    <label>Email</label>
+                    <input type="email" id="newEmail" required>
+
+                    <label>Vai trò</label>
+                    <select id="newRole">
+                        <option value="Người dùng">Người dùng</option>
+                        <option value="Quản trị viên">Quản trị viên</option>
+                    </select>
+
+                    <label>Mật khẩu</label>
+                    <input type="password" id="newPassword"
+                           minlength="6" required>
+
+                    <button type="submit">Thêm người dùng</button>
+
+                    <button type="button" id="cancelUserBtn"
+                            class="cancel-btn">
+                        Hủy
+                    </button>
+
+                </form>
+
+                <div class="table-container">
+
+                    <table id="userTable">
+
+                        <thead>
+                            <tr>
+                                <th>Mã người dùng</th>
+                                <th>Họ tên</th>
+                                <th>Email</th>
+                                <th>Vai trò</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+
+                        <tbody></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="requests-users.js"></script>
+</body>
+</html>
