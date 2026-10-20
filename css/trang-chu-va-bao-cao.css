@@ -1,6 +1,4 @@
-/* Lượng: GIAO DIỆN TRANG CHỦ VÀ BÁO CÁO
-   - Khi tách file: gắn file này vào trang-chu.html và bao-cao.html.
-   - Khi ghép vào style.css gốc: KHÔNG cần dán, vì style.css đã có sẵn các luật này. */
+/g: GIAO DIỆN TRANG CHỦ VÀ BÁO CÁO
 
 * {
     box-sizing: border-box;
