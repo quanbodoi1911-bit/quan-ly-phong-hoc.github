@@ -1,11 +1,5 @@
 // : THỐNG KÊ TRANG CHỦ VÀ BÁO CÁO
-//
-// Cách dùng:
-// - Trong script.js: xóa 2 hàm capNhatThongKe() và xuLyInBaoCao() cũ,
-//   dán toàn bộ hàm bên dưới vào chỗ đó (KHÔNG cần dán đoạn "TỰ CHẠY" ở cuối).
-// - Khi tách file: để nguyên file này, gắn vào trang trang-chu.html và bao-cao.html.
 
-// Đọc một danh sách từ localStorage (lỗi hoặc chưa có thì trả về danh sách rỗng)
 function docDanhSach(key) {
     try {
         var data = JSON.parse(localStorage.getItem(key));
@@ -23,7 +17,6 @@ function demTheoTrangThai(danhSach, trangThai) {
     }).length;
 }
 
-// Ghi số vào phần tử có id (không có phần tử thì bỏ qua, không báo lỗi)
 function ghiSo(id, giaTri) {
     var element = document.getElementById(id);
 
@@ -74,8 +67,6 @@ function xuLyInBaoCao() {
     }
 }
 
-// TỰ CHẠY: chỉ dùng khi file này đứng riêng (trang không có form đăng nhập).
-// Trong index.html đã có DOMContentLoaded của script.js nên đoạn này tự bỏ qua.
 document.addEventListener("DOMContentLoaded", function () {
     if (document.getElementById("loginForm")) {
         return;
