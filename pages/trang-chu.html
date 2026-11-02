@@ -4,54 +4,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trang chủ</title>
-
+    <title>Trang chủ - Quản lý phòng học</title>
     <link rel="stylesheet" href="trang-chu-va-bao-cao.css">
 </head>
 
 <body>
 
-    <!-- Lượng: TRANG CHỦ VÀ THỐNG KÊ -->
-
-    <div id="home" class="page">
-
-        <h1>Trang chủ</h1>
-
-        <p>Chào mừng đến với hệ thống quản lý phòng học.</p>
-
-        <div class="cards">
-
-            <div class="card">
-                <p>Tổng số phòng</p>
-                <h2 id="totalRooms">0</h2>
-            </div>
-
-            <div class="card">
-                <p>Phòng đang sử dụng</p>
-                <h2 id="usedRooms">0</h2>
-            </div>
-
-            <div class="card">
-                <p>Phòng trống</p>
-                <h2 id="emptyRooms">0</h2>
-            </div>
-
-            <div class="card">
-                <p>Yêu cầu chờ duyệt</p>
-                <h2 id="pendingRequests">0</h2>
-            </div>
-
+    <div id="app">
+        <div class="sidebar">
+            <h2>QUẢN LÝ<br>PHÒNG HỌC</h2>
+            <a href="#" class="menu-link active" data-page="home">Trang chủ</a>
+            <a href="#" class="menu-link" data-page="rooms">Quản lý phòng học</a>
+            <a href="#" class="menu-link" data-page="calendar">Lịch học</a>
+            <a href="#" class="menu-link" data-page="booking">Đặt phòng</a>
+            <a href="#" class="menu-link" data-page="requests">Yêu cầu đặt phòng</a>
+            <a href="#" class="menu-link" data-page="users">Người dùng</a>
+            <a href="#" class="menu-link" data-page="reports">Báo cáo</a>
+            <button id="logoutBtn" class="logout-btn">Đăng xuất</button>
         </div>
 
-        <div class="welcome-box">
-            <h3>Thông tin hệ thống</h3>
+        <div class="main">
+            <div class="header">
+                <input type="text" id="searchInput" placeholder="Tìm kiếm dữ liệu...">
+                <span id="currentUser">Quản trị viên</span>
+            </div>
 
-            <p>
-                Website hỗ trợ quản lý phòng học, đặt phòng,
-                lịch học và yêu cầu sử dụng phòng.
-            </p>
+            <div id="home" class="page">
+                <h1>Trang chủ</h1>
+                <p>Chào mừng đến với hệ thống quản lý phòng học.</p>
+
+                <div class="cards">
+                    <div class="card">
+                        <p>Tổng số phòng</p>
+                        <h2 id="totalRooms">0</h2>
+                    </div>
+                    <div class="card">
+                        <p>Phòng đang sử dụng</p>
+                        <h2 id="usedRooms">0</h2>
+                    </div>
+                    <div class="card">
+                        <p>Phòng trống</p>
+                        <h2 id="emptyRooms">0</h2>
+                    </div>
+                    <div class="card">
+                        <p>Yêu cầu chờ duyệt</p>
+                        <h2 id="pendingRequests">0</h2>
+                    </div>
+                </div>
+
+                <div class="welcome-box">
+                    <h3>Thông tin hệ thống</h3>
+                    <p>Website hỗ trợ quản lý phòng học, đặt phòng, lịch học và yêu cầu sử dụng phòng.</p>
+                </div>
+            </div>
         </div>
-
     </div>
 
     <script src="trang-chu-va-bao-cao.js"></script>
